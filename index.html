@@ -14,10 +14,29 @@
 
 <body ng-app="pg-ng-dropdown">
 	
-	<section>
+	<section ng-init="list = [
+		{
+			text: 'Carl Sagan',
+			value: 0,
+		},
+		{
+			text: 'Stephen Hawking',
+			value: 1,
+		},
+		{
+			text: 'Michio Kaku',
+			value: 2,
+		},
+		{
+			text: 'Niel deGrasse Tyson',
+			value: 3,
+		},
+	]">
 
 		<article>
-			<div pg-ng-dropdown></div>
+
+			<div data-pg-ng-dropdown data-options="list"></div>
+
 		</article>		
 
 	</section>
