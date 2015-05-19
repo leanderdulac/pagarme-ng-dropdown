@@ -9,14 +9,14 @@
 	function dropdownDirective(){
 
 		var template = '<div class="pg-dropdown">' +
-							'<div class="current-selected-option">' +
+							'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">' +
 									'<i data-ng-if="image === \'true\'">' +
 									'</i>' +
 									'<span data-ng-bind="data[currentSelected].text">' +
 									'</span>' +
 							'</div>' +
 							'<ul class="dropdown-content">' +
-								'<li data-ng-repeat="option in data">' +
+								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in data">' +
 									'<i data-ng-if="image === \'true\'">' +
 									'</i>' +
 									'<span data-ng-bind="option.text">' +
@@ -29,7 +29,8 @@
 			scope: {
 				data: '=options',
 				image: '@imageOptions',
-				currentSelected: '=selected',
+				currentSelected: '@selected',
+				openedClass: '@',
 			},
 			restrict: 'AEC',
 			controller: controller,
@@ -43,17 +44,66 @@
 		function controller($scope){
 
 			var self = this;
+			self.opened = false;
 
-			if($scope.currentSelected){
+			if(!$scope.currentSelected){
 
 				$scope.currentSelected = 0;
-				
+
+			}
+
+			$scope.data[$scope.currentSelected].selected = true;
+
+			self.selectOption = selectOption;
+			self.toggle = toggle;
+
+			function selectOption(_index){
+
+				_index = parseInt(_index);
+
+				$scope.currentSelected = _index;
+				$scope.data[_index].selected = true;
+
+				console.log(_index);
+			}
+
+			function toggle(){
+
+				if(self.opened){
+
+					self.opened = false;
+					$scope.$broadcast('close-dropdown');
+
+				}else{
+
+					self.opened = true;
+					$scope.$broadcast('open-dropdown');
+
+				}
+
 			}
 			
 		}
 
-		function postLink(){
+		function postLink($scope, $element){
+
+			if($scope.openedClass){
+				var openedClass = $scope.openedClass;
+			}else{
+				var openedClass = 'opened';
+			}
 			
+			$scope.$on('open-dropdown', open);
+			$scope.$on('close-dropdown', close);
+
+			function open(){
+				$element.addClass(openedClass);
+			}
+
+			function close(){
+				$element.removeClass(openedClass);
+			}
+
 		}
 
 	}
