@@ -61,10 +61,10 @@
 
 				_index = parseInt(_index);
 
-				$scope.data[$scope.currentSelected].selected = undefined;
+				delete $scope.data[$scope.currentSelected].selected;
 				$scope.currentSelected = _index;
 				$scope.data[_index].selected = true;
-
+				
 			}
 
 			function toggle(){
