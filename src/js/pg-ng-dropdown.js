@@ -12,11 +12,11 @@
 							'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">' +
 									'<i data-ng-if="image === \'true\'">' +
 									'</i>' +
-									'<span data-ng-bind="data[currentSelected].text">' +
+									'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">' +
 									'</span>' +
 							'</div>' +
 							'<ul class="dropdown-content">' +
-								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in data">' +
+								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
 									'<i data-ng-if="image === \'true\'">' +
 									'</i>' +
 									'<span data-ng-bind="option.text">' +
@@ -35,6 +35,7 @@
 			restrict: 'AEC',
 			controller: controller,
 			controllerAs: 'dropdownCtrl',
+			bindToController: true,
 			link: postLink,
 			template: template,
 		};
@@ -46,13 +47,13 @@
 			var self = this;
 			self.opened = false;
 
-			if(!$scope.currentSelected){
+			if(!self.currentSelected){
 
-				$scope.currentSelected = 0;
+				self.currentSelected = 0;
 
 			}
 
-			$scope.data[$scope.currentSelected].selected = true;
+			self.data[self.currentSelected].selected = true;
 
 			self.selectOption = selectOption;
 			self.toggle = toggle;
@@ -61,9 +62,9 @@
 
 				_index = parseInt(_index);
 
-				delete $scope.data[$scope.currentSelected].selected;
-				$scope.currentSelected = _index;
-				$scope.data[_index].selected = true;
+				delete self.data[self.currentSelected].selected;
+				self.currentSelected = _index;
+				self.data[_index].selected = true;
 				
 			}
 
@@ -85,10 +86,10 @@
 			
 		}
 
-		function postLink($scope, $element){
+		function postLink($scope, $element, attrs, ctrl){
 
-			if($scope.openedClass){
-				var openedClass = $scope.openedClass;
+			if(ctrl.openedClass){
+				var openedClass = ctrl.openedClass;
 			}else{
 				var openedClass = 'opened';
 			}
