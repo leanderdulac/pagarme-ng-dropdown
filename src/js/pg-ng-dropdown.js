@@ -16,7 +16,7 @@
 									'</span>' +
 							'</div>' +
 							'<ul class="dropdown-content">' +
-								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
+								'<li ng-if="dropdownCtrl.currentSelected != $index" data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
 									'<i data-ng-if="image === \'true\'">' +
 									'</i>' +
 									'<span data-ng-bind="option.text">' +
