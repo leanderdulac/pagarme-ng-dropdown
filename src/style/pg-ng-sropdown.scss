@@ -4,6 +4,68 @@ body{
 	font-family: Verdana;
 	font-size: 16px;
 	line-height: 32px;
-	color: #ebebeb;
+	color: #dbdbdb;
 	background-color: teal;
+}
+
+*, *:before, *:after {
+
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+	
+}
+
+
+$width: 200px;
+$initialHeight: 40px;
+$openedHeight: 215px;
+$sidePadding: 15px;
+$borderColor: #484848;
+$backgroundColor: #aaaaaa;
+$dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+
+.pg-dropdown{
+
+	position: relative;
+	height: $initialHeight;
+	width: $width;
+	border:1px solid $borderColor;
+	background-color: $backgroundColor;
+	border-radius: 4px;
+	cursor:pointer;
+	overflow: hidden;
+	transition: height 425ms $dropdownEasing;
+
+	.current-selected-option{
+
+		height: $initialHeight;
+		padding: 0 $sidePadding;
+		line-height: 39px;
+
+	}
+
+	.dropdown-content{
+
+		position:relative;
+		display:block;
+		margin: 0;
+		padding: 0 $sidePadding;
+		height: calc(100% - #{($initialHeight)});
+		border-top: 1px solid #848484;
+		
+	}
+
+	li{
+
+		list-style:none;
+
+	}
+
+	&.opened{
+
+		height: $openedHeight;
+
+	}
+
 }

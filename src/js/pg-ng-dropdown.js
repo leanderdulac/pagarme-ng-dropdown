@@ -36,6 +36,7 @@
 			controller: controller,
 			controllerAs: 'dropdownCtrl',
 			bindToController: true,
+			replace: true,
 			link: postLink,
 			template: template,
 		};
