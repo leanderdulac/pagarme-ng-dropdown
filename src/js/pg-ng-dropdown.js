@@ -44,40 +44,40 @@
 
 		function controller($scope){
 
-			var self = this;
-			self.opened = false;
+			var vm = this;
+			vm.opened = false;
 
-			if(!self.currentSelected){
+			if(!vm.currentSelected){
 
-				self.currentSelected = 0;
+				vm.currentSelected = 0;
 
 			}
 
-			self.data[self.currentSelected].selected = true;
+			vm.data[vm.currentSelected].selected = true;
 
-			self.selectOption = selectOption;
-			self.toggle = toggle;
+			vm.selectOption = selectOption;
+			vm.toggle = toggle;
 
 			function selectOption(_index){
 
 				_index = parseInt(_index);
 
-				delete self.data[self.currentSelected].selected;
-				self.currentSelected = _index;
-				self.data[_index].selected = true;
+				delete vm.data[vm.currentSelected].selected;
+				vm.currentSelected = _index;
+				vm.data[_index].selected = true;
 				
 			}
 
 			function toggle(){
 
-				if(self.opened){
+				if(vm.opened){
 
-					self.opened = false;
+					vm.opened = false;
 					$scope.$broadcast('close-dropdown');
 
 				}else{
 
-					self.opened = true;
+					vm.opened = true;
 					$scope.$broadcast('open-dropdown');
 
 				}

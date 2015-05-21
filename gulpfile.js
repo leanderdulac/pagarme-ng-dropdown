@@ -27,10 +27,7 @@ gulp.task('style', function(){
 
 gulp.task('watch', function() {
   gulp.watch('src/style/*.scss', ['style']);
-  gulp.watch('src/style/*.css', function(){
-  		gulp.task('style');
-  		notifyLiveReload();
-  });
+  gulp.watch('src/style/*.css', notifyLiveReload, ['style']);
   gulp.watch('index.html', notifyLiveReload);
 });
 
