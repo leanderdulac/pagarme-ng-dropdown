@@ -29,6 +29,7 @@ gulp.task('watch', function() {
   gulp.watch('src/style/*.scss', ['style']);
   gulp.watch('src/style/*.css', notifyLiveReload, ['style']);
   gulp.watch('index.html', notifyLiveReload);
+  gulp.watch('src/js/*.js', notifyLiveReload);
 });
 
 
