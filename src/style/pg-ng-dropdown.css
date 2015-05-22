@@ -47,13 +47,16 @@ body {
     position: relative;
     display: block;
     margin: 0;
-    padding: 6px 15px;
+    padding: 6px 0;
     height: calc(100% - 40px);
     border-top: 1px solid #848484; }
   .pg-dropdown li {
     list-style: none;
-    transition: opacity 300ms ease; }
-    .pg-dropdown li.selected {
+    transition: all 300ms ease;
+    padding: 0 15px; }
+    .pg-dropdown li:hover {
+      background-color: #333; }
+    .pg-dropdown li.selected * {
       opacity: 0.4; }
   .pg-dropdown.opened {
     height: 215px; }
