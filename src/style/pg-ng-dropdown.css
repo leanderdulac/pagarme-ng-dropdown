@@ -33,6 +33,9 @@ body {
     height: calc(100% - 40px);
     border-top: 1px solid #848484; }
   .pg-dropdown li {
-    list-style: none; }
+    list-style: none;
+    transition: opacity 300ms ease; }
+    .pg-dropdown li.selected {
+      opacity: 0.4; }
   .pg-dropdown.opened {
     height: 215px; }

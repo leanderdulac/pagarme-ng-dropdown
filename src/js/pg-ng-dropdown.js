@@ -6,7 +6,9 @@
 	angular.module('pg-ng-dropdown', [])
 		.directive('pgNgDropdown', dropdownDirective);
 
-	function dropdownDirective(){
+	dropdownDirective.$inject = ['$timeout'];
+
+	function dropdownDirective($timeout){
 
 		var template = '<div class="pg-dropdown">' +
 							'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">' +
@@ -16,7 +18,7 @@
 									'</span>' +
 							'</div>' +
 							'<ul class="dropdown-content">' +
-								'<li ng-if="dropdownCtrl.currentSelected != $index" data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
+								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
 									'<i data-ng-if="image === \'true\'">' +
 									'</i>' +
 									'<span data-ng-bind="option.text">' +
@@ -26,11 +28,13 @@
 					   '</div>';
 
 		var directive = {
+
 			scope: {
 				data: '=options',
 				image: '@imageOptions',
 				currentSelected: '@selected',
 				openedClass: '@',
+				selectedClass: '@selectedOptionClass',
 			},
 			restrict: 'AEC',
 			controller: controller,
@@ -39,6 +43,7 @@
 			replace: true,
 			link: postLink,
 			template: template,
+
 		};
 
 		return directive;
@@ -61,11 +66,22 @@
 
 			function selectOption(_index){
 
-				_index = parseInt(_index);
+				if(_index !== vm.currentSelected){
+					
+					var _pastSelected = vm.currentSelected;
 
-				delete vm.data[vm.currentSelected].selected;
-				vm.currentSelected = _index;
-				vm.data[_index].selected = true;
+					_index = parseInt(_index);
+
+					vm.currentSelected = _index;
+					vm.data[_index].selected = true;
+
+					delete vm.data[_pastSelected].selected;
+
+					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
+
+				}else{
+					
+				}
 				
 			}
 
@@ -89,21 +105,44 @@
 
 		function postLink($scope, $element, attrs, ctrl){
 
+			var options;
+			var openedClass = 'opened';
+			var selectedClass = 'selected';
+
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
-			}else{
-				var openedClass = 'opened';
+			}
+
+			if(ctrl.selectedClass){
+				var selectedClass = ctrl.selectedClass;
 			}
 			
 			$scope.$on('open-dropdown', open);
 			$scope.$on('close-dropdown', close);
+			$scope.$on('option-selected', select);
+
+			$timeout(function(){
+				options = $element.find('li');
+				options.eq(ctrl.currentSelected).addClass(selectedClass);
+			});
+
+			function select($evt, data){
+
+				options.eq(data.index).addClass(selectedClass);
+				options.eq(data.pastIndex).removeClass(selectedClass);
+				
+			}
 
 			function open(){
+
 				$element.addClass(openedClass);
+
 			}
 
 			function close(){
+
 				$element.removeClass(openedClass);
+
 			}
 
 		}
