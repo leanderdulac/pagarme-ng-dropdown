@@ -79,7 +79,6 @@ body {
   .pg-dropdown li i, .pg-dropdown .current-selected-option i {
     height: 30px;
     width: 30px;
-    background-image: url(../img/user.png);
     background-size: 17px 17px;
     background-position: 50% 50%;
     background-repeat: no-repeat; }

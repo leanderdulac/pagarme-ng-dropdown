@@ -13,7 +13,7 @@
 		var template = [
 			'<div class="pg-dropdown">',
 				'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'">',
+						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(dropdownCtrl.data[dropdownCtrl.currentSelected].image)+\')\'}">',
 						'</i>',
 						'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">',
 						'</span>',
@@ -23,7 +23,7 @@
 				'</div>',
 				'<ul class="dropdown-content">',
 					'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'">',
+						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option.image)+\')\'}">',
 						'</i>',
 						'<span data-ng-bind="option.text">',
 						'</span>',
@@ -57,8 +57,6 @@
 
 			var vm = this;
 			vm.opened = false;
-
-			console.log(vm.image);
 
 			if(!vm.currentSelected){
 
