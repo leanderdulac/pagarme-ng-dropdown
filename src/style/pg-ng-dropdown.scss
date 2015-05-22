@@ -75,6 +75,8 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		-moz-user-select: none;
 		-ms-user-select: none;
 
+		i{ margin: 4px 0 0 0 ; }
+
 	}
 
 	.dropdown-content{
@@ -97,14 +99,6 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		transition: all 300ms ease;
 		padding: 0 $sidePadding;
 
-		// i, span{ float:left; display: block; }
-
-		// i{
-		// 	height: 25px;
-		// 	width: 25px;
-		// 	background-color: red;
-		// }
-
 		&:hover{
 
 			background-color: #333;
@@ -115,6 +109,27 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 			opacity: 0.4;
 
+		}
+
+	}
+
+	li, .current-selected-option{
+		
+		i, span{
+			position: relative;
+			float: left;
+			display:inline-block;
+		}
+
+		span{ height: 100%; margin: 0 0 0 4px ;}
+
+		i{
+			height: 30px;
+			width: 30px;
+			background-image: url(../img/user.png);
+			background-size: 17px 17px;
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
 		}
 
 	}
