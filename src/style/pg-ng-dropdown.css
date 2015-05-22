@@ -3,8 +3,8 @@ body {
   font-family: Verdana;
   font-size: 16px;
   line-height: 32px;
-  color: #dbdbdb;
-  background-color: #848484; }
+  color: floralwhite;
+  background-color: cadetblue; }
 
 *, *:before, *:after {
   -webkit-box-sizing: inherit;
@@ -12,15 +12,18 @@ body {
   box-sizing: inherit; }
 
 .pg-dropdown {
+  margin: 0 50px 0 0; }
+
+.pg-dropdown {
   position: relative;
   height: 40px;
-  width: 200px;
   border: 1px solid #484848;
   background-color: dimgrey;
   border-radius: 4px;
   cursor: pointer;
   overflow: hidden;
-  transition: height 425ms cubic-bezier(0.23, 1, 0.32, 1); }
+  transition: height 425ms cubic-bezier(0.23, 1, 0.32, 1);
+  float: left; }
   .pg-dropdown .arrow-wrapper {
     position: absolute;
     top: 0;
@@ -38,7 +41,7 @@ body {
       transform: translate(-50%, -50%);
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-top: 10px solid #dbdbdb; }
+      border-top: 10px solid floralwhite; }
   .pg-dropdown .current-selected-option {
     height: 40px;
     padding: 0 40px 0 15px;
@@ -54,7 +57,10 @@ body {
     height: calc(100% - 40px);
     border-top: 1px solid rgba(72, 72, 72, 0.35); }
   .pg-dropdown li {
+    display: block;
+    height: 30px;
     list-style: none;
+    padding: 5px 0 0 0;
     transition: all 300ms ease;
     padding: 0 15px; }
     .pg-dropdown li:hover {

@@ -10,25 +10,27 @@
 
 	function dropdownDirective($timeout, $document){
 
-		var template = '<div class="pg-dropdown">' +
-							'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">' +
-									'<i data-ng-if="image === \'true\'">' +
-									'</i>' +
-									'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">' +
-									'</span>' +
-									'<div class="arrow-wrapper">' +
-									'<div class="arrow"></div>' +
-									'</div>' +
-							'</div>' +
-							'<ul class="dropdown-content">' +
-								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
-									'<i data-ng-if="image === \'true\'">' +
-									'</i>' +
-									'<span data-ng-bind="option.text">' +
-									'</span>' +
-								'</li>' +
-							'</ul>' +
-					   '</div>';
+		var template = [
+			'<div class="pg-dropdown">',
+				'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">',
+						'<i data-ng-if="dropdownCtrl.image == \'true\'">',
+						'</i>',
+						'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">',
+						'</span>',
+						'<div class="arrow-wrapper">',
+							'<div class="arrow"></div>',
+						'</div>',
+				'</div>',
+				'<ul class="dropdown-content">',
+					'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">',
+						'<i data-ng-if="dropdownCtrl.image == \'true\'">',
+						'</i>',
+						'<span data-ng-bind="option.text">',
+						'</span>',
+					'</li>',
+				'</ul>',
+		   '</div>',
+		].join('');
 
 		var directive = {
 
@@ -55,6 +57,8 @@
 
 			var vm = this;
 			vm.opened = false;
+
+			console.log(vm.image);
 
 			if(!vm.currentSelected){
 
