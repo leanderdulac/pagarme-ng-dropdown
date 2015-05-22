@@ -23,6 +23,7 @@ $openedHeight: 215px;
 $sidePadding: 15px;
 $borderColor: #484848;
 $backgroundColor: #aaaaaa;
+$arrowColor: #ebebeb;
 $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 .pg-dropdown{
@@ -37,10 +38,38 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	overflow: hidden;
 	transition: height 425ms $dropdownEasing;
 
+	.arrow-wrapper{
+
+		position: absolute;
+		top:0;
+		right:0;
+		width: $initialHeight;
+		height: $initialHeight;
+
+		.arrow{
+
+			$_size: 10px;
+
+			position: absolute;
+			top:0;
+			left:0;
+			width: 0;
+			height: 0;
+			top:50%;
+			left:50%;
+			transform: translate(-50%, -50%);
+			border-left: ($_size / 2) solid transparent;
+			border-right: ($_size / 2) solid transparent;
+			border-top: $_size solid $arrowColor;			
+
+		}
+
+	}
+
 	.current-selected-option{
 
 		height: $initialHeight;
-		padding: 0 $sidePadding;
+		padding: 0 $initialHeight 0 $sidePadding;
 		line-height: 39px;
 
 	}
@@ -50,7 +79,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		position:relative;
 		display:block;
 		margin: 0;
-		padding: 0 $sidePadding;
+		padding: 6px $sidePadding;
 		height: calc(100% - #{($initialHeight)});
 		border-top: 1px solid #848484;
 		
@@ -62,7 +91,9 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		transition: opacity 300ms ease;
 
 		&.selected{
+
 			opacity: 0.4;
+
 		}
 
 	}

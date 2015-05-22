@@ -16,6 +16,9 @@
 									'</i>' +
 									'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">' +
 									'</span>' +
+									'<div class="arrow-wrapper">' +
+									'<div class="arrow"></div>' +
+									'</div>' +
 							'</div>' +
 							'<ul class="dropdown-content">' +
 								'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">' +
