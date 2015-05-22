@@ -6,9 +6,9 @@
 	angular.module('pg-ng-dropdown', [])
 		.directive('pgNgDropdown', dropdownDirective);
 
-	dropdownDirective.$inject = ['$timeout'];
+	dropdownDirective.$inject = ['$timeout', '$document'];
 
-	function dropdownDirective($timeout){
+	function dropdownDirective($timeout, $document){
 
 		var template = '<div class="pg-dropdown">' +
 							'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">' +
@@ -62,6 +62,7 @@
 			vm.data[vm.currentSelected].selected = true;
 
 			vm.selectOption = selectOption;
+			vm.close = close;
 			vm.toggle = toggle;
 
 			function selectOption(_index){
@@ -79,8 +80,6 @@
 
 					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
 
-				}else{
-					
 				}
 				
 			}
@@ -100,6 +99,13 @@
 				}
 
 			}
+
+			function close(){
+
+				vm.opened = false;
+				$scope.$broadcast('close-dropdown');
+
+			}
 			
 		}
 
@@ -108,6 +114,7 @@
 			var options;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
+			var eventId = Math.round(Math.random() * 1000);
 
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
@@ -120,10 +127,25 @@
 			$scope.$on('open-dropdown', open);
 			$scope.$on('close-dropdown', close);
 			$scope.$on('option-selected', select);
+			$scope.$on('$destroy', destroy);
+
+			$element.on('click', function(evt){
+
+				if(ctrl.opened){
+
+					evt.stopPropagation();
+
+				}
+
+			});
+
+			$document.on('click', ctrl.close);
 
 			$timeout(function(){
+
 				options = $element.find('li');
 				options.eq(ctrl.currentSelected).addClass(selectedClass);
+
 			});
 
 			function select($evt, data){
@@ -142,6 +164,12 @@
 			function close(){
 
 				$element.removeClass(openedClass);
+
+			}
+
+			function destroy(){
+				
+				$document.off('click');
 
 			}
 
