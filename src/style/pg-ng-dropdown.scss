@@ -5,7 +5,7 @@ body{
 	font-size: 16px;
 	line-height: 32px;
 	color: #dbdbdb;
-	background-color: teal;
+	background-color: #848484;
 }
 
 *, *:before, *:after {
@@ -22,8 +22,8 @@ $initialHeight: 40px;
 $openedHeight: 215px;
 $sidePadding: 15px;
 $borderColor: #484848;
-$backgroundColor: #aaaaaa;
-$arrowColor: #ebebeb;
+$backgroundColor: dimgrey;
+$arrowColor: #dbdbdb;
 $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 .pg-dropdown{
@@ -71,6 +71,9 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		height: $initialHeight;
 		padding: 0 $initialHeight 0 $sidePadding;
 		line-height: 39px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
 
 	}
 
@@ -81,7 +84,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		margin: 0;
 		padding: 6px 0;
 		height: calc(100% - #{($initialHeight)});
-		border-top: 1px solid #848484;
+		border-top: 1px solid rgba($borderColor, 0.35);
 		
 	}
 
