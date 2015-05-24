@@ -1,6 +1,8 @@
+'use strict';
 /**
  * @author Rafael Violato (http://rviolato.com)
  */
+
 (function(){
 
 	angular.module('pg-ng-dropdown', [])
@@ -11,6 +13,7 @@
 	function dropdownDirective($timeout, $document){
 
 		var template = [
+
 			'<div class="pg-dropdown">',
 				'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">',
 						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(dropdownCtrl.data[dropdownCtrl.currentSelected].image)+\')\'}">',
@@ -22,14 +25,15 @@
 						'</div>',
 				'</div>',
 				'<ul class="dropdown-content">',
-					'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data">',
+					'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data" title="{{option.text}}" >',
 						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option.image)+\')\'}">',
 						'</i>',
 						'<span data-ng-bind="option.text">',
 						'</span>',
 					'</li>',
 				'</ul>',
-		   '</div>',
+		    '</div>',
+
 		].join('');
 
 		var directive = {
@@ -134,18 +138,10 @@
 			$scope.$on('option-selected', select);
 			$scope.$on('$destroy', destroy);
 
-			$element.on('click', function(evt){
-
-				if(ctrl.opened){
-
-					evt.stopPropagation();
-
-				}
-
-			});
-
+			$element.on('click', elementClick);
 			$document.on('click', ctrl.close);
 
+			//init
 			$timeout(function(){
 
 
@@ -170,6 +166,16 @@
 			function close(){
 
 				$element.removeClass(openedClass);
+
+			}
+
+			function elementClick(evt){
+
+				if(ctrl.opened){
+
+					evt.stopPropagation();
+
+				}
 
 			}
 

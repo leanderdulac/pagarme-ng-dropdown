@@ -8,14 +8,6 @@ body{
 	background-color: cadetblue;
 }
 
-*, *:before, *:after {
-
-	-webkit-box-sizing: inherit;
-	-moz-box-sizing: inherit;
-	box-sizing: inherit;
-	
-}
-
 .pg-dropdown{ margin: 0 50px 0 0 ; }
 
 $initialHeight: 40px;
@@ -121,23 +113,27 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	li, .current-selected-option{
 		
 		i, span{
+
 			position: relative;
 			float: left;
 			display:inline-block;
+
 		}
 
 		span{ height: 100%; }
 
 		i{
+			
 			position: relative;
 			height: 30px;
-			width: 30px;
-			margin: 0 4px 0 0 ;
+			width: 17px;
+			margin: 0 7px 0 0 ;
 			top:50%;
 			transform: translateY(-50%);
 			background-size: 17px 17px;
 			background-position: 50% 48%;
 			background-repeat: no-repeat;
+			
 		}
 
 	}

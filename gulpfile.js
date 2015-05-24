@@ -21,15 +21,29 @@ gulp.task('style', function(){
 	
 	return gulp.src('src/style/*.scss')
 		   .pipe(sass({style: 'expanded'}))
+       .pipe(autoprefixer({
+          browsers: ['last 2 versions'],
+          cascade: false
+       }))
+       .pipe(minifycss())
+       .pipe(rename(function(path){
+                 path.extname = ".min.css";
+       }))
 		   .pipe(gulp.dest('src/style'));
 
 });
 
+gulp.task('build', function(){
+  
+});
+
 gulp.task('watch', function() {
+
   gulp.watch('src/style/*.scss', ['style']);
   gulp.watch('src/style/*.css', notifyLiveReload, ['style']);
   gulp.watch('index.html', notifyLiveReload);
   gulp.watch('src/js/*.js', notifyLiveReload);
+
 });
 
 
