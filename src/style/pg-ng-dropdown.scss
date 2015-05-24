@@ -87,7 +87,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		overflow-y: auto;
 		overflow-x: hidden;
 		margin: 0;
-		padding: $_padding 18px $_padding 0;
+		padding: $_padding 24px $_padding 0;
 		height: calc(100% - #{($initialHeight + ($_padding * 2))});
 		border-top: 1px solid rgba($borderColor, 0.35);
 		
