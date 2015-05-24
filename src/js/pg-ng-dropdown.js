@@ -148,6 +148,7 @@
 
 			$timeout(function(){
 
+
 				options = $element.find('li');
 				options.eq(ctrl.currentSelected).addClass(selectedClass);
 

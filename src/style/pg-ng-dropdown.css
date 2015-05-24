@@ -44,7 +44,7 @@ body {
       border-top: 10px solid floralwhite; }
   .pg-dropdown .current-selected-option {
     height: 40px;
-    padding: 0 40px 0 15px;
+    padding: 0 40px 0 12px;
     line-height: 39px;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -54,17 +54,21 @@ body {
   .pg-dropdown .dropdown-content {
     position: relative;
     display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
     margin: 0;
-    padding: 6px 0;
-    height: calc(100% - 40px);
+    padding: 6px 18px 6px 0;
+    height: calc(100% - 52px);
     border-top: 1px solid rgba(72, 72, 72, 0.35); }
   .pg-dropdown li {
+    position: relative;
     display: block;
     height: 30px;
+    width: 100%;
     list-style: none;
-    padding: 5px 0 0 0;
-    transition: all 300ms ease;
-    padding: 0 15px; }
+    padding: 0 12px;
+    line-height: 29.5px;
+    transition: all 300ms ease; }
     .pg-dropdown li:hover {
       background-color: #333; }
     .pg-dropdown li.selected * {
@@ -74,13 +78,16 @@ body {
     float: left;
     display: inline-block; }
   .pg-dropdown li span, .pg-dropdown .current-selected-option span {
-    height: 100%;
-    margin: 0 0 0 4px; }
+    height: 100%; }
   .pg-dropdown li i, .pg-dropdown .current-selected-option i {
+    position: relative;
     height: 30px;
     width: 30px;
+    margin: 0 4px 0 0;
+    top: 50%;
+    transform: translateY(-50%);
     background-size: 17px 17px;
-    background-position: 50% 50%;
+    background-position: 50% 48%;
     background-repeat: no-repeat; }
   .pg-dropdown.opened {
     height: 215px; }
