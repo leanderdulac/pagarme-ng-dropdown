@@ -142,11 +142,8 @@
 			$element.on('click', elementClick);
 			$document.on('click', ctrl.close);
 
-			console.log('test');
-
 			//init
 			$timeout(function(){
-
 
 				options = $element.find('li');
 				options.eq(ctrl.currentSelected).addClass(selectedClass);
