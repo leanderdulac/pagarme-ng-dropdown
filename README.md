@@ -17,7 +17,7 @@ angular.module('myApp', ['pg-ng-dropdown']);
 ```
 
 
-Call the directive in an element via attribute, class for tag name:
+Call the directive in an element via attribute, class or tag name:
 
 ```
 <div data-pg-ng-dropdown></div>
