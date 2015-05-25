@@ -1,5 +1,5 @@
 # [pg-ng-dropdown](http://rfviolato.github.io/pg-ng-dropdown/)
-*Pagar.me directive to provide a simple and quick dropdown*
+*Pagar.me directive to provide a simple and quick dropdown from a provided array of options*
 
 ### Demo [here](http://rfviolato.github.io/pg-ng-dropdown/)
 
