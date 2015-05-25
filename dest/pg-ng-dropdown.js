@@ -136,10 +136,13 @@
 			$scope.$on('open-dropdown', open);
 			$scope.$on('close-dropdown', close);
 			$scope.$on('option-selected', select);
+			$scope.$on('option-selected', ctrl.close);
 			$scope.$on('$destroy', destroy);
 
 			$element.on('click', elementClick);
 			$document.on('click', ctrl.close);
+
+			console.log('test');
 
 			//init
 			$timeout(function(){
