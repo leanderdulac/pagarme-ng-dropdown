@@ -1,0 +1,73 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="src/style/pg-ng-dropdown.css">
+  <title>pg-ng-dropdown</title>
+
+</head>
+
+<body ng-app="pg-ng-dropdown-demo">
+	
+	<section ng-init="list = [
+		{
+			text: 'Carl Sagan',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Stephen Hawking',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Michio Kaku',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Niel deGrasse Tysson',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Sir Isaac Newton',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Blaise Pascal',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Galileo Galilei',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Christian Doppler',
+			image: 'src/img/user.png',
+		},
+		{
+			text: 'Nikola Tesla',
+			image: 'src/img/user.png',
+		},
+	]">
+
+		<article>
+
+			<div data-pg-ng-dropdown selected="0" data-options="list"></div>
+			<div data-pg-ng-dropdown selected="3" data-options="list"></div>
+			<div data-pg-ng-dropdown image-options="true" selected="8" data-options="list"></div>
+
+		</article>
+
+	</section>
+
+</body>
+
+<script src="node_modules/angular/angular.js"></script>
+<script src="src/js/pg-ng-dropdown.js"></script>
+<script src="public/js/app.js"></script>
+
+</html>
