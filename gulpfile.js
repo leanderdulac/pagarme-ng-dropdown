@@ -20,21 +20,30 @@ gulp.task('express', function(){
 gulp.task('style', function(){
 	
 	return gulp.src('src/style/*.scss')
-		   .pipe(sass({style: 'expanded'}))
-       .pipe(autoprefixer({
-          browsers: ['last 2 versions'],
-          cascade: false
-       }))
-       .pipe(minifycss())
-       .pipe(rename(function(path){
-                 path.extname = ".min.css";
-       }))
-		   .pipe(gulp.dest('src/style'));
+  		   .pipe(sass({style: 'expanded'}))
+         .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+         }))
+         .pipe(gulp.dest('src/style'))
+         .pipe(minifycss())
+         .pipe(rename(function(path){
+            path.extname = ".min.css";
+         }))
+  		   .pipe(gulp.dest('src/style'));
 
 });
 
-gulp.task('build', function(){
-  
+gulp.task('build', ['style'], function(){
+
+  return gulp.src('src/js/pg-ng-dropdown.js')
+         .pipe(gulp.dest('dest'))
+         .pipe(uglify({mangle: false}))
+         .pipe(rename(function(path){
+           path.extname = ".min.js";
+         }))
+         .pipe(gulp.dest('dest'));
+
 });
 
 gulp.task('watch', function() {
@@ -64,5 +73,5 @@ function notifyLiveReload(event) {
 }
 
 gulp.task('server', ['style', 'express', 'livereload', 'watch'], function(){
-	console.log('Awesomeness happens at local port: ' + port);
+  console.log('Awesomeness happens at local port: ' + port);
 });
