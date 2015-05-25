@@ -136,6 +136,7 @@
 			$scope.$on('open-dropdown', open);
 			$scope.$on('close-dropdown', close);
 			$scope.$on('option-selected', select);
+			$scope.$on('option-selected', ctrl.close);
 			$scope.$on('$destroy', destroy);
 
 			$element.on('click', elementClick);
@@ -143,7 +144,6 @@
 
 			//init
 			$timeout(function(){
-
 
 				options = $element.find('li');
 				options.eq(ctrl.currentSelected).addClass(selectedClass);
