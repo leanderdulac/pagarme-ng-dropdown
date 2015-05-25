@@ -47,17 +47,30 @@ Example:
 var myOptionArray = [
 		{
 			text: 'Carl Sagan',
-			image: 'img/carl.png',
+			image: 'img/carl.png'
 		},
 		{
 			text: 'Stephen Hawking',
-			image: 'img/stephen.png',
+			image: 'img/stephen.png'
 		},
 		{
 			text: 'Michio Kaku',
-			image: 'img/michio.png',
-		},
+			image: 'img/michio.png'
+		}
 ];
+```
+
+#### Retrieving the selected option
+
+The option that is selected will recieve the *selected: true* property.
+
+Example:
+```
+{
+	text: 'Carl Sagan',
+	image: 'img/carl.png',
+	selected: true
+}
 ```
 
 And that's it :D
