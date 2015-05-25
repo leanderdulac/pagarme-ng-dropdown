@@ -1,10 +1,8 @@
-# [pg-ng-dropdown](https://github.com/rfviolato/pg-ng-dropdown)
-
+# [pg-ng-dropdown](http://rfviolato.github.io/pg-ng-dropdown/)
 *Pagar.me directive to provide a simple and quick dropdown*
 
-#### **Working demo on this [pen](http://codepen.io/rviolato/pen/xGRboq)**
+### Demo [here](http://rfviolato.github.io/pg-ng-dropdown/)
 
->>>>>>> 63cfb774258b26dc7d9025a36a15f4941f7892ac
 #### Installation
 
 Import the directive file into your project:
@@ -73,6 +71,13 @@ Example:
 	text: 'Carl Sagan',
 	image: 'img/carl.png',
 	selected: true
+}
+```
+
+And that's it :D
+
+Rafael Violato @ pagar.me
+selected: true
 }
 ```
 
