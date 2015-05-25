@@ -21,6 +21,7 @@
     "gulpfile.js",
     "package.json",
     "tests",
-    "public"
+    "public",
+    "src/img"
   ]
 }
