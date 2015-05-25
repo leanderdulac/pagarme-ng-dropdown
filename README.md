@@ -2,6 +2,9 @@
 
 *Pagar.me directive to provide a simple and quick dropdown*
 
+#### **Working demo on this [pen](http://codepen.io/rviolato/pen/xGRboq)**
+
+>>>>>>> 63cfb774258b26dc7d9025a36a15f4941f7892ac
 #### Installation
 
 Import the directive file into your project:
