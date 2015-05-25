@@ -5,27 +5,23 @@
 #### Installation
 
 Import the directive file into your project:
-
 ```
 <script src="pg-ng-dropdown.js"></script>
 ```
 
 Load the pg-ng-dropdown module:
-
 ```
 angular.module('myApp', ['pg-ng-dropdown']);
 ```
 
 
 Call the directive in an element via attribute, class or tag name:
-
 ```
 <div data-pg-ng-dropdown></div>
 ```
 
 
 Pass the data via attribute:
-
 ```
 <div data-pg-ng-dropdown data-options="myOptionsArray"></div>
 ```
@@ -33,23 +29,20 @@ Pass the data via attribute:
 #### Directive Optionals
 
 Choose initial selected option:
-
 ```
 <div data-pg-ng-dropdown data-selected="3" data-options="myOptionsArray"></div>
 ```
 
 Enable image options:
-
 ```
 <div data-pg-ng-dropdown image-options="true" data-options="myOptionsArray"></div>
 ```
 
 #### Array expected format
 
-The options array must contains one JSON for each option, which object must contain 'text' property for the text content and if you are using the image dropdown option, must contain 'image' property with the url.
+The options array must contains one JSON for each option. Each object must contain 'text' property for the text content and if image option is enabled it must contain 'image' property with the url.
 
 Example:
-
 ```
 var myOptionArray = [
 		{
