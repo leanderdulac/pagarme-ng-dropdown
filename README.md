@@ -1,5 +1,7 @@
 # [pg-ng-dropdown](https://github.com/rfviolato/pg-ng-dropdown)
 
+Check the demo on this [pen](http://codepen.io/rviolato/pen/xGRboq):
+
 *Pagar.me directive to provide a simple and quick dropdown*
 
 #### Installation
