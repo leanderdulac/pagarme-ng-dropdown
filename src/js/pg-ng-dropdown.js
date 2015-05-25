@@ -76,7 +76,7 @@
 
 			function selectOption(_index){
 
-				if(_index !== vm.currentSelected){
+				if(_index !== parseInt(vm.currentSelected)){
 					
 					var _pastSelected = vm.currentSelected;
 
@@ -171,11 +171,7 @@
 
 			function elementClick(evt){
 
-				if(ctrl.opened){
-
-					evt.stopPropagation();
-
-				}
+				evt.stopPropagation();
 
 			}
 
