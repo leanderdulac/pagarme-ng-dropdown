@@ -39,6 +39,17 @@ Enable image options:
 <div data-pg-ng-dropdown image-options="true" data-options="myOptionsArray"></div>
 ```
 
+Opened dropdown class (default is `opened`):
+```html
+<div data-pg-ng-dropdown opened-class="my-opened-class" data-options="myOptionsArray"></div>
+```
+
+Selected option class (default is `selected`):
+```html
+<div data-pg-ng-dropdown selected-option-class="my-selected-class" data-options="myOptionsArray"></div>
+```
+
+
 #### Array expected format
 
 The options array must contains one JSON for each option. Each object must contain `text` property for the text content and if image option is enabled it must contain `image` property with the url.
@@ -76,4 +87,4 @@ Example:
 
 And that's it :D
 
-Rafael Violato @ pagar.me
+[Rafael Violato](http://rviolato.com) @ [pagar.me](http://pagar.me)
