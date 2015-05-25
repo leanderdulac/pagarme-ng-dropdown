@@ -68,11 +68,11 @@
 
 			}
 
-			vm.data[vm.currentSelected].selected = true;
-
 			vm.selectOption = selectOption;
 			vm.close = close;
 			vm.toggle = toggle;
+
+			selectOption(vm.currentSelected);
 
 			function selectOption(_index){
 
@@ -171,11 +171,7 @@
 
 			function elementClick(evt){
 
-				if(ctrl.opened){
-
-					evt.stopPropagation();
-
-				}
+				evt.stopPropagation();
 
 			}
 
