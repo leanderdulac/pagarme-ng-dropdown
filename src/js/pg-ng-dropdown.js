@@ -68,15 +68,15 @@
 
 			}
 
+			vm.data[vm.currentSelected].selected = true;
+
 			vm.selectOption = selectOption;
 			vm.close = close;
 			vm.toggle = toggle;
 
-			selectOption(vm.currentSelected);
-
 			function selectOption(_index){
 
-				if(_index !== vm.currentSelected){
+				if(_index !== parseInt(vm.currentSelected)){
 					
 					var _pastSelected = vm.currentSelected;
 
