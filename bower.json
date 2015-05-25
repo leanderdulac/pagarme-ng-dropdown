@@ -1,0 +1,23 @@
+{
+  "name": "pg-ng-select",
+  "version": "1.0.0",
+  "homepage": "https://github.com/pagarme/pg-ng-dropdown",
+  "authors": [
+    "Rafael Violato <rafael.violato@pagar.me>"
+  ],
+  "description": "Pagar.me directive to provide a simple and quick dropdown from a provided array of options",
+  "main": "src/js/pg-ng-dropdown.js",
+  "keywords": [
+    "dropdown",
+    "directive"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "public"
+  ]
+}
