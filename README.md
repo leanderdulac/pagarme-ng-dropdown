@@ -5,7 +5,12 @@
 
 #### Installation
 
-Install via Bower package manager:
+Install via npm package manager:
+```
+$ npm install pg-ng-dropdown
+```
+
+Or via Bower:
 ```
 $ bower install pg-ng-dropdown
 ```
