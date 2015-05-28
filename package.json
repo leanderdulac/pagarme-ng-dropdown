@@ -18,7 +18,7 @@
     "angular",
     "directive"
   ],
-  "author": "Rafael Violato",
+  "author": "Rafael Violato <rfviolato@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pagarme/pg-ng-dropdown/issues"
@@ -47,3 +47,4 @@
     "package.json"
   ]
 }
+
