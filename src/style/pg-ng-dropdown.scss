@@ -8,7 +8,14 @@ body{
 	background-color: cadetblue;
 }
 
-.pg-dropdown{ margin: 0 50px 0 0 ; }
+article{
+	width: 100%;
+	text-align: center;
+}
+
+.pg-dropdown:not(:last-child){ margin: 0 50px 0 0 ; }
+
+.container{ display: inline-block; } 
 
 $initialHeight: 40px;
 $openedHeight: 215px;
