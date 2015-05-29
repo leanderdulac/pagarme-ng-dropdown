@@ -17,7 +17,7 @@ $ bower install pg-ng-dropdown
 
 Import the directive file into your project:
 ```html
-<script src="bower_components/dest/pg-ng-dropdown.min.js"></script>
+<script src="bower_components/pg-ng-dropdown/dest/pg-ng-dropdown.min.js"></script>
 ```
 
 Load the pg-ng-dropdown module:
