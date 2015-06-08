@@ -61,6 +61,11 @@ Selected option class (default is `selected`):
 <div data-pg-ng-dropdown selected-option-class="my-selected-class" data-options="myOptionsArray"></div>
 ```
 
+Option selected/changed custom function:
+```html
+<div data-pg-ng-dropdown onchange="myFunction" data-options="myOptionsArray"></div>
+```
+
 
 #### Array expected format
 
