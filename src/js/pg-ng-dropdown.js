@@ -44,6 +44,7 @@
 				currentSelected: '@selected',
 				openedClass: '@',
 				selectedClass: '@selectedOptionClass',
+				onchange: '&',
 			},
 			restrict: 'AEC',
 			controller: controller,
@@ -86,6 +87,8 @@
 					vm.data[_index].selected = true;
 
 					delete vm.data[_pastSelected].selected;
+
+					vm.change();
 
 					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
 

@@ -1,0 +1,150 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'publish',
+1 verbose cli   'pg-ng-dropdown' ]
+2 info using npm@2.5.1
+3 info using node@v0.12.1
+4 verbose publish [ 'pg-ng-dropdown' ]
+5 silly cache add args [ 'pg-ng-dropdown', null ]
+6 verbose cache add spec pg-ng-dropdown
+7 silly cache add parsed spec { raw: 'pg-ng-dropdown',
+7 silly cache add   scope: null,
+7 silly cache add   name: 'pg-ng-dropdown',
+7 silly cache add   rawSpec: '',
+7 silly cache add   spec: '*',
+7 silly cache add   type: 'range' }
+8 verbose addNamed pg-ng-dropdown@*
+9 silly addNamed semver.valid null
+10 silly addNamed semver.validRange *
+11 silly addNameRange { name: 'pg-ng-dropdown', range: '*', hasData: false }
+12 silly mapToRegistry name pg-ng-dropdown
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/pg-ng-dropdown
+16 verbose addNameRange registry:https://registry.npmjs.org/pg-ng-dropdown not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/pg-ng-dropdown
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 6:08:58 PM
+20 verbose request using bearer token for auth
+21 verbose request id 1603fbe9daadd92b
+22 http request GET https://registry.npmjs.org/pg-ng-dropdown
+23 http 200 https://registry.npmjs.org/pg-ng-dropdown
+24 silly get cb [ 200,
+24 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+24 silly get     etag: '"7P0NJDTVMZE9I4JZL5IGNJ5Y2"',
+24 silly get     'content-type': 'application/json',
+24 silly get     'cache-control': 'max-age=60',
+24 silly get     'content-length': '4558',
+24 silly get     'accept-ranges': 'bytes',
+24 silly get     date: 'Mon, 08 Jun 2015 21:09:00 GMT',
+24 silly get     via: '1.1 varnish',
+24 silly get     connection: 'keep-alive',
+24 silly get     'x-served-by': 'cache-jfk1033-JFK',
+24 silly get     'x-cache': 'MISS',
+24 silly get     'x-cache-hits': '0',
+24 silly get     'x-timer': 'S1433797739.540109,VS0,VE799',
+24 silly get     vary: 'Accept' } ]
+25 verbose get saving pg-ng-dropdown to /Users/rfviolato/.npm/registry.npmjs.org/pg-ng-dropdown/.cache.json
+26 silly addNameRange number 2 { name: 'pg-ng-dropdown', range: '*', hasData: true }
+27 silly addNameRange versions [ 'pg-ng-dropdown', [ '1.0.0' ] ]
+28 verbose addNamed pg-ng-dropdown@1.0.0
+29 silly addNamed semver.valid 1.0.0
+30 silly addNamed semver.validRange 1.0.0
+31 silly cache afterAdd pg-ng-dropdown@1.0.0
+32 verbose afterAdd /Users/rfviolato/.npm/pg-ng-dropdown/1.0.0/package/package.json not in flight; writing
+33 verbose afterAdd /Users/rfviolato/.npm/pg-ng-dropdown/1.0.0/package/package.json written
+34 silly publish { name: 'pg-ng-dropdown',
+34 silly publish   version: '1.0.0',
+34 silly publish   description: 'Pagar.me directive to provide a simple and quick dropdown from a provided array of options',
+34 silly publish   main: 'gulpfile.js',
+34 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+34 silly publish   repository:
+34 silly publish    { type: 'git',
+34 silly publish      url: 'https://github.com/pagarme/pg-ng-dropdown.git' },
+34 silly publish   keywords:
+34 silly publish    [ 'pg-ng-dropdown',
+34 silly publish      'dropdown',
+34 silly publish      'select',
+34 silly publish      'input',
+34 silly publish      'angular',
+34 silly publish      'directive' ],
+34 silly publish   author: { name: 'Rafael Violato', email: 'rfviolato@gmail.com' },
+34 silly publish   license: 'MIT',
+34 silly publish   bugs: { url: 'https://github.com/pagarme/pg-ng-dropdown/issues' },
+34 silly publish   homepage: 'https://github.com/pagarme/pg-ng-dropdown',
+34 silly publish   devDependencies:
+34 silly publish    { angular: '^1.3.15',
+34 silly publish      'connect-livereload': '^0.5.3',
+34 silly publish      express: '^4.12.4',
+34 silly publish      gulp: '^3.8.11',
+34 silly publish      'gulp-autoprefixer': '^2.3.0',
+34 silly publish      'gulp-minify-css': '^1.1.1',
+34 silly publish      'gulp-rename': '^1.2.2',
+34 silly publish      'gulp-sass': '^2.0.1',
+34 silly publish      'gulp-uglify': '^1.2.0',
+34 silly publish      'gulp-watch': '^4.2.4',
+34 silly publish      'tiny-lr': '^0.1.5' },
+34 silly publish   ignore:
+34 silly publish    [ 'node_modules',
+34 silly publish      'test',
+34 silly publish      'public',
+34 silly publish      'src',
+34 silly publish      'index.html',
+34 silly publish      'gulpfile.js',
+34 silly publish      'package.json' ],
+34 silly publish   readme: '# [pg-ng-dropdown](http://pagarme.github.io/pg-ng-dropdown/)\n*[Pagar.me](http://pagar.me) directive to provide a simple and quick dropdown from a provided array of options*\n\n### Check the demo [here](http://pagarme.github.io/pg-ng-dropdown/)\n\n#### Installation\n\nInstall via Bower package manager:\n```\n$ bower install pg-ng-dropdown\n```\n\nImport the directive file into your project:\n```html\n<script src="bower_components/dest/pg-ng-dropdown.min.js"></script>\n```\n\nLoad the pg-ng-dropdown module:\n```javscript\nangular.module(\'myApp\', [\'pg-ng-dropdown\']);\n```\n\n\nCall the directive in an element via attribute, class or tag name:\n```html\n<div data-pg-ng-dropdown></div>\n```\n\n\nPass the data via attribute:\n```html\n<div data-pg-ng-dropdown data-options="myOptionsArray"></div>\n```\n\n#### Directive Optionals\n\nChoose initial selected option:\n```html\n<div data-pg-ng-dropdown data-selected="3" data-options="myOptionsArray"></div>\n```\n\nEnable image options:\n```html\n<div data-pg-ng-dropdown image-options="true" data-options="myOptionsArray"></div>\n```\n\nOpened dropdown class (default is `opened`):\n```html\n<div data-pg-ng-dropdown opened-class="my-opened-class" data-options="myOptionsArray"></div>\n```\n\nSelected option class (default is `selected`):\n```html\n<div data-pg-ng-dropdown selected-option-class="my-selected-class" data-options="myOptionsArray"></div>\n```\n\n\n#### Array expected format\n\nThe options array must contains one JSON for each option. Each object must contain `text` property for the text content and if image option is enabled it must contain `image` property with the url.\n\nExample:\n```javascript\nvar myOptionArray = [\n\t\t{\n\t\t\ttext: \'Carl Sagan\',\n\t\t\timage: \'img/carl.png\'\n\t\t},\n\t\t{\n\t\t\ttext: \'Stephen Hawking\',\n\t\t\timage: \'img/stephen.png\'\n\t\t},\n\t\t{\n\t\t\ttext: \'Michio Kaku\',\n\t\t\timage: \'img/michio.png\'\n\t\t}\n];\n```\n\n#### Retrieving the selected option\n\nThe option that is selected will recieve the `selected: true` property.\n\nExample:\n```javascript\n{\n\ttext: \'Carl Sagan\',\n\timage: \'img/carl.png\',\n\tselected: true\n}\n```\n\nAnd that\'s it :D\n\n[Rafael Violato](http://rviolato.com) @ [pagar.me](http://pagar.me)\n',
+34 silly publish   readmeFilename: 'README.md',
+34 silly publish   gitHead: 'da8cea4e84bda89e92a439f4d39cab1e002f6cac',
+34 silly publish   _id: 'pg-ng-dropdown@1.0.0',
+34 silly publish   _shasum: 'e555953ac6e5a5ecfabe62907bc006e6cc7f7de4',
+34 silly publish   _from: 'pg-ng-dropdown@*' }
+35 info prepublish pg-ng-dropdown@1.0.0
+36 silly mapToRegistry name pg-ng-dropdown
+37 silly mapToRegistry using default registry
+38 silly mapToRegistry registry https://registry.npmjs.org/
+39 silly mapToRegistry uri https://registry.npmjs.org/pg-ng-dropdown
+40 verbose publish registryBase https://registry.npmjs.org/
+41 silly publish uploading /Users/rfviolato/.npm/pg-ng-dropdown/1.0.0/package.tgz
+42 verbose request uri https://registry.npmjs.org/pg-ng-dropdown
+43 verbose request sending authorization for write operation
+44 info attempt registry request try #1 at 6:09:00 PM
+45 verbose request using bearer token for auth
+46 http request PUT https://registry.npmjs.org/pg-ng-dropdown
+47 http 403 https://registry.npmjs.org/pg-ng-dropdown
+48 verbose headers { 'content-type': 'application/json',
+48 verbose headers   'cache-control': 'max-age=60',
+48 verbose headers   'content-length': '95',
+48 verbose headers   'accept-ranges': 'bytes',
+48 verbose headers   date: 'Mon, 08 Jun 2015 21:09:02 GMT',
+48 verbose headers   via: '1.1 varnish',
+48 verbose headers   connection: 'keep-alive',
+48 verbose headers   'x-served-by': 'cache-jfk1022-JFK',
+48 verbose headers   'x-cache': 'MISS',
+48 verbose headers   'x-cache-hits': '0',
+48 verbose headers   'x-timer': 'S1433797740.959718,VS0,VE1215' }
+49 verbose request invalidating /Users/rfviolato/.npm/registry.npmjs.org/pg-ng-dropdown on PUT
+50 error publish Failed PUT 403
+51 verbose stack Error: "You cannot publish over the previously published version 1.0.0." : pg-ng-dropdown
+51 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:254:14)
+51 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:178:14)
+51 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:344:22)
+51 verbose stack     at Request.emit (events.js:110:17)
+51 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1239:14)
+51 verbose stack     at Request.emit (events.js:129:20)
+51 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1187:12)
+51 verbose stack     at IncomingMessage.emit (events.js:129:20)
+51 verbose stack     at _stream_readable.js:908:16
+51 verbose stack     at process._tickCallback (node.js:355:11)
+52 verbose statusCode 403
+53 verbose pkgid pg-ng-dropdown
+54 verbose cwd /Users/rfviolato/Code/pg-ng-dropdown
+55 error Darwin 14.3.0
+56 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish" "pg-ng-dropdown"
+57 error node v0.12.1
+58 error npm  v2.5.1
+59 error code E403
+60 error "You cannot publish over the previously published version 1.0.0." : pg-ng-dropdown
+61 error If you need help, you may report this error at:
+61 error     <http://github.com/npm/npm/issues>
+62 verbose exit [ 1, true ]
