@@ -1,6 +1,8 @@
 # [pg-ng-dropdown](http://pagarme.github.io/pg-ng-dropdown/)
 *[Pagar.me](http://pagar.me) directive to provide a simple and quick dropdown from a provided array of options*
 
+## Legacy version
+
 ### Check the demo [here](http://pagarme.github.io/pg-ng-dropdown/)
 
 #### Installation
