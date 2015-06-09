@@ -3,6 +3,8 @@
 
 ### Check the demo [here](http://pagarme.github.io/pg-ng-dropdown/)
 
+*For older angular versions that does not supports `bindToController`, you should see this [branch](https://github.com/pagarme/pg-ng-dropdown/tree/legacy).*
+
 #### Installation
 
 Install via npm package manager:
