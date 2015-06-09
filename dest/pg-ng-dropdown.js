@@ -88,7 +88,7 @@
 
 					delete vm.data[_pastSelected].selected;
 
-					vm.change();
+					vm.onchange();
 
 					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
 
