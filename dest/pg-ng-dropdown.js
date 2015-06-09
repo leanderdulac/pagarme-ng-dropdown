@@ -83,13 +83,9 @@
 					$scope.currentSelected = _index;
 					$scope.data[_index].selected = true;
 
-					if($scope.data[_pastSelected]){
-						delete $scope.data[_pastSelected].selected;
-					}
+					delete $scope.data[_pastSelected].selected;
 
-					if($scope.change){
-						$scope.change();
-					}
+					$scope.onchange();
 
 					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
 
