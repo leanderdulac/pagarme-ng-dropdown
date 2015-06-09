@@ -1,6 +1,8 @@
 # [pg-ng-dropdown](http://pagarme.github.io/pg-ng-dropdown/)
 *[Pagar.me](http://pagar.me) directive to provide a simple and quick dropdown from a provided array of options*
+
 *For angular versions < 1.3 that does not supports* [`bindToController`](https://docs.angularjs.org/api/ngMock/service/$controller) *, you should see this [branch](https://github.com/pagarme/pg-ng-dropdown/tree/legacy).*
+
 ### Check the demo [here](http://pagarme.github.io/pg-ng-dropdown/)
 
 #### Installation
