@@ -65,22 +65,19 @@
 			var vm = this;
 			vm.opened = false;
 
-			if((typeof vm.value) === 'number'){
-
-				vm.data[vm.value].selected = true;
-
-			}else{
-
-				vm.value = vm.value || 0;
-
-			}
-
+			vm.value = vm.value || 0;
 			vm.textProperty = vm.textProperty || 'text';
 			vm.imageProperty = vm.imagetProperty || 'image';
 
 			vm.selectOption = selectOption;
 			vm.close = close;
 			vm.toggle = toggle;
+
+			if((typeof vm.value) === 'number'){
+
+				vm.data[vm.value].selected = true;
+
+			}
 
 			function selectOption(_index){
 
