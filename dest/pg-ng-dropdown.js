@@ -62,22 +62,19 @@
 
 			$scope.opened = false;
 
-			if((typeof $scope.value) === 'number'){
-
-				$scope.data[$scope.value].selected = true;
-
-			}else{
-
-				$scope.value = $scope.value || 0;
-
-			}
-
+			$scope.value = $scope.value || 0;
 			$scope.textProperty = $scope.textProperty || 'text';
 			$scope.imageProperty = $scope.imagetProperty || 'image';
 
 			$scope.selectOption = selectOption;
 			$scope.close = close;
 			$scope.toggle = toggle;
+
+			if((typeof $scope.value) === 'number'){
+
+				$scope.data[$scope.value].selected = true;
+
+			}
 
 			function selectOption(_index){
 
