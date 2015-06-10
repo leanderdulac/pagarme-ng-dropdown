@@ -16,19 +16,19 @@
 
 			'<div class="pg-dropdown">',
 				'<div data-ng-click="toggle()" class="current-selected-option">',
-						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(data[currentSelected].image)+\')\'}">',
+						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(data[value][imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="data[currentSelected].text">',
+						'<span data-ng-bind="data[value][textProperty] || value">',
 						'</span>',
 						'<div class="arrow-wrapper">',
 							'<div class="arrow"></div>',
 						'</div>',
 				'</div>',
 				'<ul class="dropdown-content">',
-					'<li data-ng-click="selectOption($index)" data-ng-repeat="option in data" title="{{option.text}}" >',
-						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option.image)+\')\'}">',
+					'<li data-ng-click="selectOption($index)" data-ng-repeat="option in data" title="{{option[textProperty]}}" >',
+						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="option.text">',
+						'<span data-ng-bind="option[textProperty]">',
 						'</span>',
 					'</li>',
 				'</ul>',
@@ -41,9 +41,11 @@
 			scope: {
 				data: '=options',
 				image: '@imageOptions',
-				currentSelected: '@selected',
+				imageProperty: '@',
+				value: '@selected',
+				textProperty: '@',
 				openedClass: '@',
-				selectedClass: '@selectedOptionClass',
+				selectedClass: '@',
 				onchange: '&',
 			},
 			restrict: 'AEC',
@@ -60,13 +62,18 @@
 
 			$scope.opened = false;
 
-			if(!$scope.currentSelected){
+			if((typeof $scope.value) === 'number'){
 
-				$scope.currentSelected = 0;
+				$scope.data[$scope.value].selected = true;
+
+			}else{
+
+				$scope.value = $scope.value || 0;
 
 			}
 
-			$scope.data[$scope.currentSelected].selected = true;
+			$scope.textProperty = $scope.textProperty || 'text';
+			$scope.imageProperty = $scope.imagetProperty || 'image';
 
 			$scope.selectOption = selectOption;
 			$scope.close = close;
@@ -74,16 +81,20 @@
 
 			function selectOption(_index){
 
-				if(_index !== parseInt($scope.currentSelected)){
+				if(_index !== parseInt($scope.value)){
 					
-					var _pastSelected = $scope.currentSelected;
+					var _pastSelected = $scope.value;
 
 					_index = parseInt(_index);
 
-					$scope.currentSelected = _index;
+					$scope.value = _index;
 					$scope.data[_index].selected = true;
 
-					delete $scope.data[_pastSelected].selected;
+					if($scope.data[_pastSelected]){
+
+						delete $scope.data[_pastSelected].selected;
+
+					}
 
 					$scope.onchange();
 
@@ -146,7 +157,7 @@
 			$timeout(function(){
 
 				options = $element.find('li');
-				options.eq($scope.currentSelected).addClass(selectedClass);
+				options.eq($scope.value).addClass(selectedClass);
 
 			});
 
