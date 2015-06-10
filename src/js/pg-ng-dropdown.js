@@ -49,25 +49,34 @@
 				onchange: '&',
 			},
 			restrict: 'AEC',
+			compile: compile,
 			controller: controller,
 			controllerAs: 'ctrl',
 			bindToController: true,
 			replace: true,
-			link: postLink,
 			template: template,
 
 		};
 
 		return directive;
 
+		function compile($element, attrs){
+
+			attrs.value = attrs.value || 0;
+			attrs.textProperty = attrs.textProperty || 'text';
+			attrs.imageProperty = attrs.imagetProperty || 'image';
+
+			return {
+				post: postLink,
+			};
+			
+		}
+
 		function controller($scope){
 
 			var vm = this;
-			vm.opened = false;
 
-			vm.value = vm.value || 0;
-			vm.textProperty = vm.textProperty || 'text';
-			vm.imageProperty = vm.imagetProperty || 'image';
+			vm.opened = false;
 
 			vm.selectOption = selectOption;
 			vm.close = close;
