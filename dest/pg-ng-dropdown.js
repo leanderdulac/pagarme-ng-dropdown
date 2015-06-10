@@ -16,7 +16,7 @@
 
 			'<div class="pg-dropdown">',
 				'<div data-ng-click="ctrl.toggle()" class="current-selected-option">',
-						'<i data-ng-if="ctrl[ctrl.imageProperty] == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
+						'<i data-ng-if="ctrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
 						'</i>',
 						'<span data-ng-bind="ctrl.data[ctrl.value][ctrl.textProperty] || ctrl.value">',
 						'</span>',
@@ -26,7 +26,7 @@
 				'</div>',
 				'<ul class="dropdown-content">',
 					'<li data-ng-click="ctrl.selectOption($index)" data-ng-repeat="option in ctrl.data" title="{{option[ctrl.textProperty]}}" >',
-						'<i data-ng-if="ctrl[ctrl.imageProperty] == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[ctrl.imageProperty])+\')\'}">',
+						'<i data-ng-if="ctrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[ctrl.imageProperty])+\')\'}">',
 						'</i>',
 						'<span data-ng-bind="option[ctrl.textProperty]">',
 						'</span>',
