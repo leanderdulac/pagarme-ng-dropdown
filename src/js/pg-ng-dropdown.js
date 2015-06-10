@@ -28,7 +28,7 @@
 					'<li data-ng-click="selectOption($index)" data-ng-repeat="option in data" title="{{option[textProperty]}}" >',
 						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="option[textProperty]">',
+						'<span data-ng-bind="option[textProperty]" data-t="{{option[textProperty]}}" data-tt="{{option}}" data-ttt="{{textProperty}}">',
 						'</span>',
 					'</li>',
 				'</ul>',
@@ -49,22 +49,30 @@
 				onchange: '&',
 			},
 			restrict: 'AEC',
+			compile: compile,
 			controller: controller,
 			replace: true,
-			link: postLink,
 			template: template,
 
 		};
 
 		return directive;
 
+		function compile($element, attrs){
+
+			attrs.value = attrs.value || 0;
+			attrs.textProperty = attrs.textProperty || 'text';
+			attrs.imageProperty = attrs.imagetProperty || 'image';
+
+			return{
+				post: postLink,
+			};
+			
+		}
+
 		function controller($scope){
 
 			$scope.opened = false;
-
-			$scope.value = $scope.value || 0;
-			$scope.textProperty = $scope.textProperty || 'text';
-			$scope.imageProperty = $scope.imagetProperty || 'image';
 
 			$scope.selectOption = selectOption;
 			$scope.close = close;
