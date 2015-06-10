@@ -16,9 +16,9 @@
 
 			'<div class="pg-dropdown">',
 				'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(dropdownCtrl.data[dropdownCtrl.currentSelected].image)+\')\'}">',
+						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(dropdownCtrl.data[dropdownCtrl.value].image)+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">',
+						'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.value].text || dropdownCtrl.value">',
 						'</span>',
 						'<div class="arrow-wrapper">',
 							'<div class="arrow"></div>',
@@ -41,7 +41,7 @@
 			scope: {
 				data: '=options',
 				image: '@imageOptions',
-				currentSelected: '@selected',
+				value: '@selected',
 				openedClass: '@',
 				selectedClass: '@selectedOptionClass',
 				onchange: '&',
@@ -63,13 +63,11 @@
 			var vm = this;
 			vm.opened = false;
 
-			if(!vm.currentSelected){
+			if((typeof vm.value) === 'number'){
 
-				vm.currentSelected = 0;
+				vm.data[vm.value].selected = true;
 
 			}
-
-			vm.data[vm.currentSelected].selected = true;
 
 			vm.selectOption = selectOption;
 			vm.close = close;
@@ -77,16 +75,20 @@
 
 			function selectOption(_index){
 
-				if(_index !== parseInt(vm.currentSelected)){
+				if(_index !== parseInt(vm.value)){
 					
-					var _pastSelected = vm.currentSelected;
+					var _pastSelected = vm.value;
 
 					_index = parseInt(_index);
 
-					vm.currentSelected = _index;
+					vm.value = _index;
 					vm.data[_index].selected = true;
 
-					delete vm.data[_pastSelected].selected;
+					if(vm.data[_pastSelected]){
+
+						delete vm.data[_pastSelected].selected;
+
+					}
 
 					vm.onchange();
 
@@ -149,7 +151,7 @@
 			$timeout(function(){
 
 				options = $element.find('li');
-				options.eq(ctrl.currentSelected).addClass(selectedClass);
+				options.eq(ctrl.value).addClass(selectedClass);
 
 			});
 
