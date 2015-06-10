@@ -15,20 +15,20 @@
 		var template = [
 
 			'<div class="pg-dropdown">',
-				'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(dropdownCtrl.data[dropdownCtrl.value].image)+\')\'}">',
+				'<div data-ng-click="ctrl.toggle()" class="current-selected-option">',
+						'<i data-ng-if="ctrl[ctrl.imageProperty] == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.value].text || dropdownCtrl.value">',
+						'<span data-ng-bind="ctrl.data[ctrl.value][ctrl.textProperty] || ctrl.value">',
 						'</span>',
 						'<div class="arrow-wrapper">',
 							'<div class="arrow"></div>',
 						'</div>',
 				'</div>',
 				'<ul class="dropdown-content">',
-					'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data" title="{{option.text}}" >',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option.image)+\')\'}">',
+					'<li data-ng-click="ctrl.selectOption($index)" data-ng-repeat="option in ctrl.data" title="{{option[ctrl.textProperty]}}" >',
+						'<i data-ng-if="ctrl[ctrl.imageProperty] == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[ctrl.imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="option.text">',
+						'<span data-ng-bind="option[ctrl.textProperty]">',
 						'</span>',
 					'</li>',
 				'</ul>',
@@ -41,14 +41,16 @@
 			scope: {
 				data: '=options',
 				image: '@imageOptions',
+				imageProperty: '@',
 				value: '@selected',
+				textProperty: '@',
 				openedClass: '@',
-				selectedClass: '@selectedClass',
+				selectedClass: '@',
 				onchange: '&',
 			},
 			restrict: 'AEC',
 			controller: controller,
-			controllerAs: 'dropdownCtrl',
+			controllerAs: 'ctrl',
 			bindToController: true,
 			replace: true,
 			link: postLink,
@@ -67,7 +69,14 @@
 
 				vm.data[vm.value].selected = true;
 
+			}else{
+
+				vm.value = vm.value || 0;
+
 			}
+
+			vm.textProperty = vm.textProperty || 'text';
+			vm.imageProperty = vm.imagetProperty || 'image';
 
 			vm.selectOption = selectOption;
 			vm.close = close;
