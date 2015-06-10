@@ -43,7 +43,12 @@ Pass the data via attribute:
 
 #### Directive Optionals
 
-Choose initial selected option:
+Set the initial display text of the dropdown:
+```html
+<div data-pg-ng-dropdown data-selected="Choose an option" data-options="myOptionsArray"></div>
+```
+
+Or choose initial selected option:
 ```html
 <div data-pg-ng-dropdown data-selected="3" data-options="myOptionsArray"></div>
 ```
@@ -60,7 +65,7 @@ Opened dropdown class (default is `opened`):
 
 Selected option class (default is `selected`):
 ```html
-<div data-pg-ng-dropdown selected-option-class="my-selected-class" data-options="myOptionsArray"></div>
+<div data-pg-ng-dropdown selected-class="my-selected-class" data-options="myOptionsArray"></div>
 ```
 
 Option selected/changed custom function:

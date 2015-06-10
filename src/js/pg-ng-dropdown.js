@@ -43,7 +43,7 @@
 				image: '@imageOptions',
 				value: '@selected',
 				openedClass: '@',
-				selectedClass: '@selectedOptionClass',
+				selectedClass: '@selectedClass',
 				onchange: '&',
 			},
 			restrict: 'AEC',
