@@ -15,20 +15,20 @@
 		var template = [
 
 			'<div class="pg-dropdown">',
-				'<div data-ng-click="dropdownCtrl.toggle()" class="current-selected-option">',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(dropdownCtrl.data[dropdownCtrl.currentSelected].image)+\')\'}">',
+				'<div data-ng-click="ctrl.toggle()" class="current-selected-option">',
+						'<i data-ng-if="ctrl[ctrl.imageProperty] == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="dropdownCtrl.data[dropdownCtrl.currentSelected].text">',
+						'<span data-ng-bind="ctrl.data[ctrl.value][ctrl.textProperty] || ctrl.value">',
 						'</span>',
 						'<div class="arrow-wrapper">',
 							'<div class="arrow"></div>',
 						'</div>',
 				'</div>',
 				'<ul class="dropdown-content">',
-					'<li data-ng-click="dropdownCtrl.selectOption($index)" data-ng-repeat="option in dropdownCtrl.data" title="{{option.text}}" >',
-						'<i data-ng-if="dropdownCtrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option.image)+\')\'}">',
+					'<li data-ng-click="ctrl.selectOption($index)" data-ng-repeat="option in ctrl.data" title="{{option[ctrl.textProperty]}}" >',
+						'<i data-ng-if="ctrl[ctrl.imageProperty] == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[ctrl.imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="option.text">',
+						'<span data-ng-bind="option[ctrl.textProperty]">',
 						'</span>',
 					'</li>',
 				'</ul>',
@@ -41,13 +41,16 @@
 			scope: {
 				data: '=options',
 				image: '@imageOptions',
-				currentSelected: '@selected',
+				imageProperty: '@',
+				value: '@selected',
+				textProperty: '@',
 				openedClass: '@',
-				selectedClass: '@selectedOptionClass',
+				selectedClass: '@',
+				onchange: '&',
 			},
 			restrict: 'AEC',
 			controller: controller,
-			controllerAs: 'dropdownCtrl',
+			controllerAs: 'ctrl',
 			bindToController: true,
 			replace: true,
 			link: postLink,
@@ -62,13 +65,18 @@
 			var vm = this;
 			vm.opened = false;
 
-			if(!vm.currentSelected){
+			if((typeof vm.value) === 'number'){
 
-				vm.currentSelected = 0;
+				vm.data[vm.value].selected = true;
+
+			}else{
+
+				vm.value = vm.value || 0;
 
 			}
 
-			vm.data[vm.currentSelected].selected = true;
+			vm.textProperty = vm.textProperty || 'text';
+			vm.imageProperty = vm.imagetProperty || 'image';
 
 			vm.selectOption = selectOption;
 			vm.close = close;
@@ -76,16 +84,22 @@
 
 			function selectOption(_index){
 
-				if(_index !== parseInt(vm.currentSelected)){
+				if(_index !== parseInt(vm.value)){
 					
-					var _pastSelected = vm.currentSelected;
+					var _pastSelected = vm.value;
 
 					_index = parseInt(_index);
 
-					vm.currentSelected = _index;
+					vm.value = _index;
 					vm.data[_index].selected = true;
 
-					delete vm.data[_pastSelected].selected;
+					if(vm.data[_pastSelected]){
+
+						delete vm.data[_pastSelected].selected;
+
+					}
+
+					vm.onchange();
 
 					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
 
@@ -146,7 +160,7 @@
 			$timeout(function(){
 
 				options = $element.find('li');
-				options.eq(ctrl.currentSelected).addClass(selectedClass);
+				options.eq(ctrl.value).addClass(selectedClass);
 
 			});
 

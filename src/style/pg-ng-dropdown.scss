@@ -86,7 +86,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		overflow-y: auto;
 		overflow-x: hidden;
 		margin: 0;
-		padding: $_padding 24px $_padding 0;
+		padding: $_padding  0;
 		height: calc(100% - #{($initialHeight + ($_padding * 2))});
 		border-top: 1px solid rgba($borderColor, 0.35);
 		
@@ -98,10 +98,14 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 		display: block;
 		height: 30px;
 		width: 100%;
-		list-style:none;
 		padding: 0 $sidePadding;
+		list-style:none;
+		text-align: left;
 		line-height: 29.5px;
 		transition: all 300ms ease;
+		box-sizing: border-box;
+
+		span{ overflow:hidden; }
 
 		&:hover{
 
