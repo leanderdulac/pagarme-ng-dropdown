@@ -49,35 +49,40 @@
 				onchange: '&',
 			},
 			restrict: 'AEC',
+			compile: compile,
 			controller: controller,
 			replace: true,
-			link: postLink,
 			template: template,
 
 		};
 
 		return directive;
 
+		function compile($element, attrs){
+
+			attrs.value = attrs.value || 0;
+			attrs.textProperty = attrs.textProperty || 'text';
+			attrs.imageProperty = attrs.imagetProperty || 'image';
+
+			return{
+				post: postLink,
+			};
+			
+		}
+
 		function controller($scope){
 
 			$scope.opened = false;
+
+			$scope.selectOption = selectOption;
+			$scope.close = close;
+			$scope.toggle = toggle;
 
 			if((typeof $scope.value) === 'number'){
 
 				$scope.data[$scope.value].selected = true;
 
-			}else{
-
-				$scope.value = $scope.value || 0;
-
 			}
-
-			$scope.textProperty = $scope.textProperty || 'text';
-			$scope.imageProperty = $scope.imagetProperty || 'image';
-
-			$scope.selectOption = selectOption;
-			$scope.close = close;
-			$scope.toggle = toggle;
 
 			function selectOption(_index){
 
