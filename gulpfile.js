@@ -5,6 +5,9 @@ var sass = require('gulp-sass');
 var rename = require('gulp-rename');
 var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-minify-css');
+var merge = require('merge-stream');
+var del = require('del');
+
 
 var port = 4000;
 
@@ -34,15 +37,27 @@ gulp.task('style', function(){
 
 });
 
-gulp.task('build', ['style'], function(){
+gulp.task('clean:dest', function(cb){
 
-  return gulp.src('src/js/pg-ng-dropdown.js')
-         .pipe(gulp.dest('dest'))
-         .pipe(uglify({mangle: false}))
-         .pipe(rename(function(path){
-           path.extname = ".min.js";
-         }))
-         .pipe(gulp.dest('dest'));
+  del('./dest', cb);
+
+});
+
+
+gulp.task('build', ['style', 'clean:dest'], function(){
+
+  var js = gulp.src('src/js/pg-ng-dropdown.js')
+           .pipe(gulp.dest('dest/js'))
+           .pipe(uglify({mangle: false}))
+           .pipe(rename(function(path){
+             path.extname = ".min.js";
+           }))
+           .pipe(gulp.dest('dest/js'));
+
+  var css = gulp.src('src/style/*.css')
+            .pipe(gulp.dest('dest/css'));
+
+  return merge(js, css);
 
 });
 
