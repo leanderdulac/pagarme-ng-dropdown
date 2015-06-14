@@ -22,6 +22,11 @@ Import the directive file into your project:
 <script src="bower_components/pg-ng-dropdown/dest/pg-ng-dropdown.min.js"></script>
 ```
 
+If you wish the same style of the example, import the css.
+```html
+<link rel="stylesheet" type="text/css" href="dest/css/pg-ng-dropdown.min.css">
+```
+
 Load the pg-ng-dropdown module:
 ```javscript
 angular.module('myApp', ['pg-ng-dropdown']);
