@@ -21,7 +21,7 @@
 						'<span data-ng-bind="data[value][textProperty] || value">',
 						'</span>',
 						'<div class="arrow-wrapper">',
-							'<div class="arrow "></div>',
+							'<div class="arrow ss-icon ss-standard ss-navigatedown"></div>',
 						'</div>',
 				'</div>',
 				'<ul class="dropdown-content">',
