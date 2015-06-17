@@ -112,6 +112,35 @@ Option selected/changed custom function:
 <div data-pg-ng-dropdown data-onchange="myFunction" data-options="myOptionsArray"></div>
 ```
 
+#### Registered Scope Events
+
+You can communicate with each of the dropdowns in your page by naming them with the attribute `name`:
+```html
+<div data-pg-ng-dropdown name="myDropdown" data-options="myOptionsArray"></div>
+```
+
+And you can open and close a dropdown trough scope events by passing as data the name of the directive:
+```javascript
+//opening
+$scope.$broadcast('pg-dropdown-open', {
+	name: 'myDropdown'
+});
+
+//closing
+$scope.$broadcast('pg-dropdown-close', {
+	name: 'myDropdown'
+});
+```
+
+You can also select a given option:
+```javascript
+//select the third option
+$scope.$broadcast('pg-select-option', {
+	name: 'myDropdown',
+	index: 2,
+});
+```
+
 
 #### Retrieving the selected option
 
