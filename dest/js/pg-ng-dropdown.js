@@ -43,6 +43,7 @@
 				image: '@imageOptions',
 				imageProperty: '@',
 				value: '@selected',
+				name: '@',
 				textProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
@@ -75,6 +76,7 @@
 			$scope.opened = false;
 
 			$scope.selectOption = selectOption;
+			$scope.open = open;
 			$scope.close = close;
 			$scope.toggle = toggle;
 
@@ -125,6 +127,13 @@
 
 			}
 
+			function open(){
+				
+				$scope.opened = true;
+				$scope.$broadcast('pg-open-dropdown');
+
+			}
+
 			function close(){
 
 				$scope.opened = false;
@@ -139,7 +148,6 @@
 			var options;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
-			var eventId = Math.round(Math.random() * 1000);
 
 			if($scope.openedClass){
 				var openedClass = $scope.openedClass;
@@ -149,12 +157,19 @@
 				var selectedClass = $scope.selectedClass;
 			}
 			
-			$scope.$on('open-dropdown', open);
-			$scope.$on('close-dropdown', close);
-			$scope.$on('option-selected', select);
-			$scope.$on('option-selected', $scope.close);
-			$scope.$on('$destroy', destroy);
+			var $open = $scope.$on('pg-open-dropdown', open);
+			var $close = $scope.$on('pg-close-dropdown', close);
+			var $openThis = $scope.$on('pg-dropdown-open', openEvt);
+			var $closeThis = $scope.$on('pg-dropdown-close', closeEvt);
+			var $selectThis = $scope.$on('pg-select-option', selectEvt);
+			var $select = $scope.$on('pg-option-selected', function($evt, data){
 
+				select($evt, data);
+				$scope.close();
+
+			});
+
+			$scope.$on('$destroy', destroy);
 			$element.on('click', elementClick);
 			$document.on('click', $scope.close);
 
@@ -191,9 +206,50 @@
 
 			}
 
+			function selectEvt($evt, data){
+
+				if($scope.name === data.name){
+
+					$scope.$apply(function(){
+
+						$scope.selectOption(data.index);
+
+					});
+
+				}
+				
+			}
+
+			function openEvt($evt, data){
+
+				if($scope.name === data.name){
+
+					$scope.open();
+
+				}
+				
+			}
+
+			function closeEvt($evt, data){
+
+				if($scope.name === data.name){
+
+					$scope.close();
+
+				}
+				
+			}
+
 			function destroy(){
 				
 				$document.off('click');
+				$document.off('click');
+				$open();
+				$close();
+				$select();
+				$closeThis();
+				$openThis();
+				$selectThis();
 
 			}
 
