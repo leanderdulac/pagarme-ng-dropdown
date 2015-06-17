@@ -152,7 +152,6 @@
 			var options;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
-			var eventId = Math.round(Math.random() * 1000);
 
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
@@ -253,7 +252,7 @@
 				$select();
 				$closeThis();
 				$openThis();
-				$selectThis
+				$selectThis();
 
 			}
 
