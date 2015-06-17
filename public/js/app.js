@@ -1,8 +1,21 @@
 angular.module('pg-ng-dropdown-demo', ['pg-ng-dropdown'])
 .controller('test', function($scope){
 
-	$scope.func = function(){
-		console.log('hey!');
-	}
+	window.t = function(){
+
+		$scope.$broadcast('dropdown-open', {
+			name: 'genius3'
+		});
+		
+	};
+
+	window.tt = function(){
+
+		$scope.$broadcast('select-option', {
+			name: 'genius3',
+			index: 0,
+		});
+		
+	};
 	
 });

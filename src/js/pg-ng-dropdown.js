@@ -43,6 +43,7 @@
 				image: '@imageOptions',
 				imageProperty: '@',
 				value: '@selected',
+				name: '@',
 				textProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
@@ -79,6 +80,7 @@
 			vm.opened = false;
 
 			vm.selectOption = selectOption;
+			vm.open = open;
 			vm.close = close;
 			vm.toggle = toggle;
 
@@ -129,6 +131,13 @@
 
 			}
 
+			function open(){
+				
+				vm.opened = true;
+				$scope.$broadcast('open-dropdown');
+
+			}
+
 			function close(){
 
 				vm.opened = false;
@@ -157,6 +166,9 @@
 			$scope.$on('close-dropdown', close);
 			$scope.$on('option-selected', select);
 			$scope.$on('option-selected', ctrl.close);
+			$scope.$on('dropdown-open', openEvt);
+			$scope.$on('dropdown-close', closeEvt);
+			$scope.$on('select-option', selectEvt);
 			$scope.$on('$destroy', destroy);
 
 			$element.on('click', elementClick);
@@ -193,6 +205,40 @@
 
 				evt.stopPropagation();
 
+			}
+
+			function selectEvt($evt, data){
+
+				if(ctrl.name === data.name){
+
+					$scope.$apply(function(){
+
+						ctrl.selectOption(data.index);
+						
+					});
+
+				}
+				
+			}
+
+			function openEvt($evt, data){
+
+				if(ctrl.name === data.name){
+
+					ctrl.open();
+
+				}
+				
+			}
+
+			function closeEvt($evt, data){
+
+				if(ctrl.name === data.name){
+
+					ctrl.close();
+
+				}
+				
 			}
 
 			function destroy(){
