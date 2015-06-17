@@ -68,12 +68,14 @@ var myOptionArray = [
 ];
 ```
 
+
 #### Directive Optionals
 
 You can choose the object property to display the text of the option, instead of the default `text`:
 
 ```html
 <div data-pg-ng-dropdown data-text-property="diffTextProp" data-options="myOptionsArray"></div>
+
 ```
 
 You can do the same to set the image url of the option, instead of the default `image`:
@@ -82,35 +84,43 @@ You can do the same to set the image url of the option, instead of the default `
 <div data-pg-ng-dropdown data-text-property="diffImageProp" data-options="myOptionsArray"></div>
 ```
 
+
 Set the initial display text of the dropdown:
 ```html
 <div data-pg-ng-dropdown data-selected="Choose an option" data-options="myOptionsArray"></div>
 ```
+
 
 Or choose initial selected option (default is `0`):
 ```html
 <div data-pg-ng-dropdown data-selected="3" data-options="myOptionsArray"></div>
 ```
 
+
 Enable image options (default is `false`):
 ```html
 <div data-pg-ng-dropdown data-image-options="true" data-options="myOptionsArray"></div>
 ```
+
 
 Opened dropdown class (default is `opened`):
 ```html
 <div data-pg-ng-dropdown data-opened-class="my-opened-class" data-options="myOptionsArray"></div>
 ```
 
+
 Selected option class (default is `selected`):
 ```html
 <div data-pg-ng-dropdown data-selected-class="my-selected-class" data-options="myOptionsArray"></div>
 ```
 
+
 Option selected/changed custom function:
 ```html
 <div data-pg-ng-dropdown data-onchange="myFunction" data-options="myOptionsArray"></div>
 ```
+
+
 
 #### Registered Scope Events
 
@@ -118,6 +128,7 @@ You can communicate with each of the dropdowns in your page by naming them with 
 ```html
 <div data-pg-ng-dropdown name="myDropdown" data-options="myOptionsArray"></div>
 ```
+
 
 And you can open and close a dropdown trough scope events by passing as data the name of the directive:
 ```javascript
@@ -132,6 +143,7 @@ $scope.$broadcast('pg-dropdown-close', {
 });
 ```
 
+
 You can also select a given option:
 ```javascript
 //select the third option
@@ -140,6 +152,7 @@ $scope.$broadcast('pg-select-option', {
 	index: 2,
 });
 ```
+
 
 
 #### Retrieving the selected option
@@ -154,6 +167,7 @@ Example:
 	selected: true
 }
 ```
+
 
 And that's it :D
 
