@@ -105,7 +105,7 @@
 
 					$scope.onchange();
 
-					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
+					$scope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
 
 				}
 				
@@ -116,12 +116,12 @@
 				if($scope.opened){
 
 					$scope.opened = false;
-					$scope.$broadcast('close-dropdown');
+					$scope.$broadcast('pg-close-dropdown');
 
 				}else{
 
 					$scope.opened = true;
-					$scope.$broadcast('open-dropdown');
+					$scope.$broadcast('pg-open-dropdown');
 
 				}
 
@@ -137,7 +137,7 @@
 			function close(){
 
 				$scope.opened = false;
-				$scope.$broadcast('close-dropdown');
+				$scope.$broadcast('pg-close-dropdown');
 
 			}
 			
