@@ -109,7 +109,7 @@
 
 					vm.onchange();
 
-					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
+					$scope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
 
 				}
 				
@@ -120,12 +120,12 @@
 				if(vm.opened){
 
 					vm.opened = false;
-					$scope.$broadcast('close-dropdown');
+					$scope.$broadcast('pg-close-dropdown');
 
 				}else{
 
 					vm.opened = true;
-					$scope.$broadcast('open-dropdown');
+					$scope.$broadcast('pg-open-dropdown');
 
 				}
 
@@ -134,14 +134,14 @@
 			function open(){
 				
 				vm.opened = true;
-				$scope.$broadcast('open-dropdown');
+				$scope.$broadcast('pg-open-dropdown');
 
 			}
 
 			function close(){
 
 				vm.opened = false;
-				$scope.$broadcast('close-dropdown');
+				$scope.$broadcast('pg-close-dropdown');
 
 			}
 			
@@ -162,17 +162,21 @@
 				var selectedClass = ctrl.selectedClass;
 			}
 			
-			$scope.$on('open-dropdown', open);
-			$scope.$on('close-dropdown', close);
-			$scope.$on('option-selected', select);
-			$scope.$on('option-selected', ctrl.close);
-			$scope.$on('dropdown-open', openEvt);
-			$scope.$on('dropdown-close', closeEvt);
-			$scope.$on('select-option', selectEvt);
-			$scope.$on('$destroy', destroy);
+			var $open = $scope.$on('pg-open-dropdown', open);
+			var $close = $scope.$on('pg-close-dropdown', close);
+			var $openThis = $scope.$on('pg-dropdown-open', openEvt);
+			var $closeThis = $scope.$on('pg-dropdown-close', closeEvt);
+			var $selectThis = $scope.$on('pg-select-option', selectEvt);
+			var $select = $scope.$on('pg-option-selected', function($evt, data){
+
+				select($evt, data);
+				ctrl.close();
+
+			});
 
 			$element.on('click', elementClick);
 			$document.on('click', ctrl.close);
+			$scope.$on('$destroy', destroy);
 
 			//init
 			$timeout(function(){
@@ -214,7 +218,7 @@
 					$scope.$apply(function(){
 
 						ctrl.selectOption(data.index);
-						
+
 					});
 
 				}
@@ -244,6 +248,12 @@
 			function destroy(){
 				
 				$document.off('click');
+				$open();
+				$close();
+				$select();
+				$closeThis();
+				$openThis();
+				$selectThis
 
 			}
 
