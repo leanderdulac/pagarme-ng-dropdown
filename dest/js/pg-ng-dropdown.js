@@ -21,18 +21,14 @@
 						'<span data-ng-bind="data[value][textProperty] || value">',
 						'</span>',
 						'<div class="arrow-wrapper">',
-							'<div class="arrow ss-icon ss-standard ss-navigatedown"></div>',
+							'<div class="arrow"></div>',
 						'</div>',
 				'</div>',
 				'<ul class="dropdown-content">',
 					'<li data-ng-click="selectOption($index)" data-ng-repeat="option in data" title="{{option[textProperty]}}" >',
 						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(option[imageProperty])+\')\'}">',
 						'</i>',
-<<<<<<< HEAD
 						'<span data-ng-bind="option[textProperty]">',
-=======
-						'<span data-ng-bind="option[textProperty]" data-t="{{option[textProperty]}}" data-tt="{{option}}" data-ttt="{{textProperty}}">',
->>>>>>> pagarme
 						'</span>',
 					'</li>',
 				'</ul>',
@@ -64,17 +60,6 @@
 
 		function compile($element, attrs){
 
-<<<<<<< HEAD
-			$scope.opened = false;
-
-			if((typeof $scope.value) === 'number'){
-
-				$scope.data[$scope.value].selected = true;
-
-			}else{
-
-				$scope.value = $scope.value || 0;
-=======
 			attrs.value = attrs.value || 0;
 			attrs.textProperty = attrs.textProperty || 'text';
 			attrs.imageProperty = attrs.imagetProperty || 'image';
@@ -86,18 +71,9 @@
 		}
 
 		function controller($scope){
->>>>>>> pagarme
 
 			$scope.opened = false;
 
-<<<<<<< HEAD
-			$scope.textProperty = $scope.textProperty || 'text';
-			$scope.imageProperty = $scope.imagetProperty || 'image';
-
-			$scope.selectOption = selectOption;
-			$scope.close = close;
-			$scope.toggle = toggle;
-=======
 			$scope.selectOption = selectOption;
 			$scope.close = close;
 			$scope.toggle = toggle;
@@ -107,7 +83,6 @@
 				$scope.data[$scope.value].selected = true;
 
 			}
->>>>>>> pagarme
 
 			function selectOption(_index){
 
