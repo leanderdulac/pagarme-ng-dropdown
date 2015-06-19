@@ -43,6 +43,7 @@
 				image: '@imageOptions',
 				imageProperty: '@',
 				value: '@selected',
+				name: '@',
 				textProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
@@ -77,8 +78,10 @@
 			var vm = this;
 
 			vm.opened = false;
+			vm.currentOption = -1;
 
 			vm.selectOption = selectOption;
+			vm.open = open;
 			vm.close = close;
 			vm.toggle = toggle;
 
@@ -101,13 +104,13 @@
 
 					if(vm.data[_pastSelected]){
 
-						delete vm.data[_pastSelected].selected;
+						vm.data[_pastSelected].selected = null;
 
 					}
 
 					vm.onchange();
 
-					$scope.$broadcast('option-selected', {index: _index, pastIndex: _pastSelected});
+					$scope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
 
 				}
 				
@@ -118,21 +121,28 @@
 				if(vm.opened){
 
 					vm.opened = false;
-					$scope.$broadcast('close-dropdown');
+					$scope.$broadcast('pg-close-dropdown');
 
 				}else{
 
 					vm.opened = true;
-					$scope.$broadcast('open-dropdown');
+					$scope.$broadcast('pg-open-dropdown');
 
 				}
+
+			}
+
+			function open(){
+				
+				vm.opened = true;
+				$scope.$broadcast('pg-open-dropdown');
 
 			}
 
 			function close(){
 
 				vm.opened = false;
-				$scope.$broadcast('close-dropdown');
+				$scope.$broadcast('pg-close-dropdown');
 
 			}
 			
@@ -143,7 +153,6 @@
 			var options;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
-			var eventId = Math.round(Math.random() * 1000);
 
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
@@ -153,14 +162,22 @@
 				var selectedClass = ctrl.selectedClass;
 			}
 			
-			$scope.$on('open-dropdown', open);
-			$scope.$on('close-dropdown', close);
-			$scope.$on('option-selected', select);
-			$scope.$on('option-selected', ctrl.close);
-			$scope.$on('$destroy', destroy);
+			var $open = $scope.$on('pg-open-dropdown', open);
+			var $close = $scope.$on('pg-close-dropdown', close);
+			var $openThis = $scope.$on('pg-dropdown-open', openEvt);
+			var $closeThis = $scope.$on('pg-dropdown-close', closeEvt);
+			var $selectThis = $scope.$on('pg-select-option', selectEvt);
+			var $select = $scope.$on('pg-option-selected', function($evt, data){
+
+				select($evt, data);
+				ctrl.close();
+
+			});
 
 			$element.on('click', elementClick);
 			$document.on('click', ctrl.close);
+			$element.on('keydown', keydown);
+			$scope.$on('$destroy', destroy);
 
 			//init
 			$timeout(function(){
@@ -186,6 +203,12 @@
 			function close(){
 
 				$element.removeClass(openedClass);
+				if(ctrl.currentOption > 0){
+
+					options.eq(ctrl.currentOption).removeClass('focused');
+					ctrl.currentOption = -1;
+
+				}
 
 			}
 
@@ -195,9 +218,101 @@
 
 			}
 
+			function selectEvt($evt, data){
+
+				if(ctrl.name === data.name){
+
+					$scope.$apply(function(){
+
+						ctrl.selectOption(data.index);
+
+					});
+
+				}
+				
+			}
+
+			function openEvt($evt, data){
+
+				if(ctrl.name === data.name){
+
+					ctrl.open();
+
+				}
+				
+			}
+
+			function closeEvt($evt, data){
+
+				if(ctrl.name === data.name){
+
+					ctrl.close();
+
+				}
+				
+			}
+
+			function keydown(evt){
+
+				var _code = evt.keyCode || evt.which;
+
+				if(_code === 13) { //enter
+
+					if(!ctrl.opened){
+
+						ctrl.open();
+
+					}else if(ctrl.opened && ctrl.currentOption != -1 && ctrl.currentOption != ctrl.value){
+
+						$scope.$apply(function(){
+
+							ctrl.selectOption(ctrl.currentOption);
+
+						});
+
+					}
+
+				}else if(_code === 27){ //esc
+
+					if(ctrl.opened){
+
+						ctrl.close();
+
+					}
+
+				}else if(_code === 38){ //up
+
+					if(ctrl.currentOption-1 >= 0){
+
+						options.eq(ctrl.currentOption).removeClass('focused');
+						ctrl.currentOption--;
+						options.eq(ctrl.currentOption).addClass('focused');
+
+					}
+
+				}else if(_code === 40){ //down
+
+					if(ctrl.currentOption+1 < options.length){
+
+						options.eq(ctrl.currentOption).removeClass('focused');
+						ctrl.currentOption++;
+						options.eq(ctrl.currentOption).addClass('focused');
+
+					}
+
+				}
+				
+			}
+
 			function destroy(){
 				
 				$document.off('click');
+				$open();
+				$close();
+				$select();
+				$closeThis();
+				$openThis();
+				$selectThis();
 
 			}
 

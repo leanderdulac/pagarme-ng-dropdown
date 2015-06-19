@@ -34,7 +34,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	border-radius: 4px;
 	cursor:pointer;
 	overflow: hidden;
-	transition: height 425ms $dropdownEasing;
+	transition: height 425ms $dropdownEasing, background-color 300ms ease;
 	float:left;
 
 	.arrow-wrapper{
@@ -107,7 +107,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 		span{ overflow:hidden; }
 
-		&:hover{
+		&:hover, &.focused{
 
 			background-color: #333;
 
@@ -152,6 +152,12 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	&.opened{
 
 		height: $openedHeight;
+
+	}
+
+	&:focus{
+
+		background-color: darken($backgroundColor, 4);
 
 	}
 
