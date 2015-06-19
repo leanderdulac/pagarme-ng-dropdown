@@ -78,6 +78,7 @@
 			var vm = this;
 
 			vm.opened = false;
+			vm.currentOption = -1;
 
 			vm.selectOption = selectOption;
 			vm.open = open;
@@ -103,7 +104,7 @@
 
 					if(vm.data[_pastSelected]){
 
-						delete vm.data[_pastSelected].selected;
+						vm.data[_pastSelected].selected = null;
 
 					}
 
@@ -202,6 +203,12 @@
 			function close(){
 
 				$element.removeClass(openedClass);
+				if(ctrl.currentOption > 0){
+
+					options.eq(ctrl.currentOption).removeClass('focused');
+					ctrl.currentOption = -1;
+
+				}
 
 			}
 
@@ -249,13 +256,47 @@
 
 				var _code = evt.keyCode || evt.which;
 
-				if(_code === 13) { //Enter key
-
-					var _activeEl = document.activeElement;
+				if(_code === 13) { //enter
 
 					if(!ctrl.opened){
 
 						ctrl.open();
+
+					}else if(ctrl.opened && ctrl.currentOption != -1 && ctrl.currentOption != ctrl.value){
+
+						$scope.$apply(function(){
+
+							ctrl.selectOption(ctrl.currentOption);
+
+						});
+
+					}
+
+				}else if(_code === 27){ //esc
+
+					if(ctrl.opened){
+
+						ctrl.close();
+
+					}
+
+				}else if(_code === 38){ //up
+
+					if(ctrl.currentOption-1 >= 0){
+
+						options.eq(ctrl.currentOption).removeClass('focused');
+						ctrl.currentOption--;
+						options.eq(ctrl.currentOption).addClass('focused');
+
+					}
+
+				}else if(_code === 40){ //down
+
+					if(ctrl.currentOption+1 < options.length){
+
+						options.eq(ctrl.currentOption).removeClass('focused');
+						ctrl.currentOption++;
+						options.eq(ctrl.currentOption).addClass('focused');
 
 					}
 

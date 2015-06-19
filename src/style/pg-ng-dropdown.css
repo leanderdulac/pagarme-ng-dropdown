@@ -76,7 +76,7 @@ article {
     box-sizing: border-box; }
     .pg-dropdown li span {
       overflow: hidden; }
-    .pg-dropdown li:hover {
+    .pg-dropdown li:hover, .pg-dropdown li.focused {
       background-color: #333; }
     .pg-dropdown li.selected * {
       opacity: 0.4; }
