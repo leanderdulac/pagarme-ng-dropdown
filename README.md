@@ -169,6 +169,10 @@ Example:
 ```
 
 
+#### Accessibility
+
+Supports tab index, with `enter`, `esc`, `up` and `down` arrows controls. Enter key opens the focused dropdown and esc closes it. Use up and down arrow to choose an option and press enter again to select it.
+
 And that's it :D
 
 [Rafael Violato](http://rviolato.com) @ [pagar.me](http://pagar.me)
