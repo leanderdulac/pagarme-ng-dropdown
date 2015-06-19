@@ -175,6 +175,7 @@
 
 			$element.on('click', elementClick);
 			$document.on('click', ctrl.close);
+			$element.on('keydown', keydown);
 			$scope.$on('$destroy', destroy);
 
 			//init
@@ -239,6 +240,24 @@
 				if(ctrl.name === data.name){
 
 					ctrl.close();
+
+				}
+				
+			}
+
+			function keydown(evt){
+
+				var _code = evt.keyCode || evt.which;
+
+				if(_code === 13) { //Enter key
+
+					var _activeEl = document.activeElement;
+
+					if(!ctrl.opened){
+
+						ctrl.open();
+
+					}
 
 				}
 				
