@@ -200,6 +200,8 @@
 				options = optionsWrapper.find('li');
 				options.eq(ctrl.value).addClass(selectedClass);
 
+				optionHeight = options.eq(0).prop('offsetHeight');
+
 				if(ctrl.dynamicHeight){
 
 					measureHeight();
@@ -326,6 +328,12 @@
 						ctrl.currentOption--;
 						options.eq(ctrl.currentOption).addClass('focused');
 
+						if(ctrl.currentOption < options.length){
+
+							optionsWrapper[0].scrollTop -= optionHeight;
+
+						}
+
 					}
 
 				}else if(_code === 40){ //down
@@ -337,6 +345,12 @@
 						options.eq(ctrl.currentOption).removeClass('focused');
 						ctrl.currentOption++;
 						options.eq(ctrl.currentOption).addClass('focused');
+						
+						if(ctrl.currentOption > 1){
+
+							optionsWrapper[0].scrollTop += optionHeight;
+
+						}
 
 					}
 
@@ -350,7 +364,6 @@
 				var _padding = parseInt(_style.paddingTop) + parseInt(_style.paddingBottom);
 				var _margin = parseInt(_style.marginTop) + parseInt(_style.marginBottom);
 
-				optionHeight = options.eq(0).prop('offsetHeight');
 				closedHeight = $element.prop('offsetHeight');
 				openedHeight = (optionHeight * options.length) + closedHeight + _padding + _margin;
 				
