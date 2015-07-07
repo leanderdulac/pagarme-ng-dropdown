@@ -23,6 +23,7 @@
 						'<div class="arrow-wrapper">',
 							'<div class="arrow"></div>',
 						'</div>',
+						'<div style="clear:both;"></div>',
 				'</div>',
 				'<ul class="dropdown-content">',
 					'<li data-ng-click="ctrl.selectOption($index)" data-ng-repeat="option in ctrl.data" title="{{option[ctrl.textProperty]}}" >',
@@ -30,6 +31,7 @@
 						'</i>',
 						'<span data-ng-bind="option[ctrl.textProperty]">',
 						'</span>',
+						'<div style="clear:both;"></div>',
 					'</li>',
 				'</ul>',
 		    '</div>',
@@ -48,6 +50,7 @@
 				openedClass: '@',
 				selectedClass: '@',
 				onchange: '&',
+				dynamicHeight: '@',
 			},
 			restrict: 'AEC',
 			compile: compile,
@@ -84,6 +87,12 @@
 			vm.open = open;
 			vm.close = close;
 			vm.toggle = toggle;
+
+			$scope.$watch('data', function(){
+
+				$scope.$broadcast('options-changed');
+
+			});
 
 			if((typeof vm.value) === 'number'){
 
@@ -150,7 +159,11 @@
 
 		function postLink($scope, $element, attrs, ctrl){
 
+			var optionsWrapper;
 			var options;
+			var optionHeight;
+			var closedHeight;
+			var openedHeight;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
 
@@ -167,6 +180,7 @@
 			var $openThis = $scope.$on('pg-dropdown-open', openEvt);
 			var $closeThis = $scope.$on('pg-dropdown-close', closeEvt);
 			var $selectThis = $scope.$on('pg-select-option', selectEvt);
+			var $optionsChanged = $scope.$on('pg-options-changed', measureHeight);
 			var $select = $scope.$on('pg-option-selected', function($evt, data){
 
 				select($evt, data);
@@ -182,8 +196,15 @@
 			//init
 			$timeout(function(){
 
-				options = $element.find('li');
+				optionsWrapper = $element.find('ul');
+				options = optionsWrapper.find('li');
 				options.eq(ctrl.value).addClass(selectedClass);
+
+				if(ctrl.dynamicHeight){
+
+					measureHeight();
+
+				}
 
 			});
 
@@ -198,15 +219,26 @@
 
 				$element.addClass(openedClass);
 
+				if(ctrl.dynamicHeight){
+					$element.css('height', (openedHeight) + 'px');
+				}
+
 			}
 
 			function close(){
 
 				$element.removeClass(openedClass);
+
 				if(ctrl.currentOption > 0){
 
 					options.eq(ctrl.currentOption).removeClass('focused');
 					ctrl.currentOption = -1;
+
+				}
+
+				if(ctrl.dynamicHeight){
+
+					$element.css('height', (closedHeight) + 'px');
 
 				}
 
@@ -258,6 +290,8 @@
 
 				if(_code === 13) { //enter
 
+					evt.preventDefault();
+
 					if(!ctrl.opened){
 
 						ctrl.open();
@@ -274,6 +308,8 @@
 
 				}else if(_code === 27){ //esc
 
+					evt.preventDefault();
+
 					if(ctrl.opened){
 
 						ctrl.close();
@@ -281,6 +317,8 @@
 					}
 
 				}else if(_code === 38){ //up
+
+					evt.preventDefault();
 
 					if(ctrl.currentOption-1 >= 0){
 
@@ -291,6 +329,8 @@
 					}
 
 				}else if(_code === 40){ //down
+
+					evt.preventDefault();
 
 					if(ctrl.currentOption+1 < options.length){
 
@@ -304,12 +344,25 @@
 				
 			}
 
+			function measureHeight(){
+
+				var _style = window.getComputedStyle(optionsWrapper[0]);
+				var _padding = parseInt(_style.paddingTop) + parseInt(_style.paddingBottom);
+				var _margin = parseInt(_style.marginTop) + parseInt(_style.marginBottom);
+
+				optionHeight = options.eq(0).prop('offsetHeight');
+				closedHeight = $element.prop('offsetHeight');
+				openedHeight = (optionHeight * options.length) + closedHeight + _padding + _margin;
+				
+			}
+
 			function destroy(){
 				
 				$document.off('click');
 				$open();
 				$close();
 				$select();
+				$optionsChanged();
 				$closeThis();
 				$openThis();
 				$selectThis();

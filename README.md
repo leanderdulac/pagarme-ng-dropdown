@@ -120,6 +120,10 @@ Option selected/changed custom function:
 <div data-pg-ng-dropdown data-onchange="myFunction" data-options="myOptionsArray"></div>
 ```
 
+Dynamic Height support:
+```html
+<div data-pg-ng-dropdown data-dynamic-height="true" data-options="myOptionsArray"></div>
+```
 
 
 #### Registered Scope Events
