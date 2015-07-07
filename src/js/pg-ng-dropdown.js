@@ -150,6 +150,7 @@
 
 		function postLink($scope, $element, attrs, ctrl){
 
+			var optionsWrapper;
 			var options;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
@@ -182,7 +183,8 @@
 			//init
 			$timeout(function(){
 
-				options = $element.find('li');
+				optionsWrapper = $element.find('ul');
+				options = optionsWrapper.find('li');
 				options.eq(ctrl.value).addClass(selectedClass);
 
 			});
