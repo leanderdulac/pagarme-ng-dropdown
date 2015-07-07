@@ -19,6 +19,9 @@ article {
 [dynamic-height=true] .dropdown-content {
   overflow: hidden !important; }
 
+[image-options=true] {
+  width: 250px !important; }
+
 .pg-dropdown {
   position: relative;
   height: 40px;
