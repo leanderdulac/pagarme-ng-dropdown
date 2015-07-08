@@ -19,6 +19,7 @@ describe('Dropdown Spec', function(){
 	it('should have dropdowns on index.html', hasDropdowns);
 	it('should have options inside a dropdown', hasOptions);
 	it('should open dropdown on click', clickOpen);
+	it('should open dropdown on enter key press', enterKeyOpen);
 
 	function hasDropdowns(){
 
@@ -53,6 +54,33 @@ describe('Dropdown Spec', function(){
 		});
 		
 	}
+
+
+	function enterKeyOpen(){
+
+		_openEnterDropdown(function(dropdown){
+
+			expect(dropdown.getAttribute('class')).toMatch(elements.openedClass);
+			
+		});
+		
+	}
+
+	function _openEnterDropdown(callback){
+
+		browser.actions().sendKeys(protractor.Key.TAB).perform().then(function(){
+
+			var _focused = browser.driver.switchTo().activeElement();
+
+			browser.actions().sendKeys(protractor.Key.ENTER).perform().then(function(){
+
+				callback(_focused);
+				
+			});
+			
+		});	
+		
+	}	
 
 	function _openClickDropdown(index, callback){
 
