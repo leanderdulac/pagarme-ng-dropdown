@@ -25,6 +25,7 @@ describe('Dropdown Spec', function(){
 	it('should close dropdown when an option is selected', optionSelectClose);
 	it('should select an option when clicked', clickSelectOption);
 	it('should select an option when enter key is pressed', enterSelectOption);
+	it('should have <i> elements when image-options is true', imageOptions);
 
 	function hasDropdowns(){
 
@@ -218,6 +219,19 @@ describe('Dropdown Spec', function(){
 				});
 				
 			});
+			
+		});
+		
+	}
+
+	function imageOptions(){
+
+		var _imageDropdown = element(by.xpath('//div[@image-options="true"]'));
+		
+		_imageDropdown.all(by.css('i'))
+		.then(function(icons){
+
+			expect(icons.length).toBeGreaterThan(0);
 			
 		});
 		
