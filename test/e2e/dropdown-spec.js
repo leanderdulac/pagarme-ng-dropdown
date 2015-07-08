@@ -21,6 +21,7 @@ describe('Dropdown Spec', function(){
 	it('should focus dropdown on tab key press', tabFocus);
 	it('should open dropdown on click', clickOpen);
 	it('should open dropdown on enter key press', enterKeyOpen);
+	it('should close dropdown on esc key press', escKeyClose);
 
 	function hasDropdowns(){
 
@@ -67,6 +68,19 @@ describe('Dropdown Spec', function(){
 		
 	}
 
+	function escKeyClose(){
+
+		_openEnterDropdown(function(dropdown){
+
+			browser.actions().sendKeys(protractor.Key.ESCAPE).perform().then(function(){
+
+				expect(dropdown.getAttribute('class')).not.toMatch(elements.openedClass);
+				
+			});
+			
+		});		
+		
+	}
 
 	function tabFocus(){
 
