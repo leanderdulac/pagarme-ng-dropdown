@@ -22,6 +22,7 @@ describe('Dropdown Spec', function(){
 	it('should open dropdown on click', clickOpen);
 	it('should open dropdown on enter key press', enterKeyOpen);
 	it('should close dropdown on esc key press', escKeyClose);
+	it('should close dropdown when an option is selected', optionSelectClose);
 	it('should select an option when clicked', clickSelectOption);
 	it('should select an option when enter key is pressed', enterSelectOption);
 
@@ -81,6 +82,33 @@ describe('Dropdown Spec', function(){
 			.then(function(){
 
 				expect(dropdown.getAttribute('class')).not.toMatch(elements.openedClass);
+				
+			});
+			
+		});		
+		
+	}
+
+	function optionSelectClose(){
+
+		_openClickDropdown(0, function(dropdown){
+
+			dropdown.all(by.repeater(elements.optionsRepeater))
+			.then(function(options){
+
+				var _option = options[0];
+
+				_checkVisible(_option)
+				.then(function(){
+
+					_option.click()
+					.then(function(){
+
+						expect(dropdown.getAttribute('class')).not.toMatch(elements.openedClass);
+						
+					});
+					
+				});				
 				
 			});
 			
