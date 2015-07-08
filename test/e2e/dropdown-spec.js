@@ -18,6 +18,7 @@ describe('Dropdown Spec', function(){
 
 	it('should have dropdowns on index.html', hasDropdowns);
 	it('should have options inside a dropdown', hasOptions);
+	it('should open dropdown on click', clickOpen);
 
 	function hasDropdowns(){
 
@@ -43,6 +44,31 @@ describe('Dropdown Spec', function(){
 		
 	}
 
+	function clickOpen(){
+
+		_openClickDropdown(0, function(dropdown){
+
+			expect(dropdown.getAttribute('class')).toMatch(elements.openedClass);
+			
+		});
+		
+	}
+
+	function _openClickDropdown(index, callback){
+
+		elements.dropdowns.then(function(dropdowns){
+
+			var _dropdown = dropdowns[index];
+
+			_dropdown.click().then(function(){
+
+				callback(_dropdown);
+				
+			});
+			
+		});
+		
+	}
 
 
 });
