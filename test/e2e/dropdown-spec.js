@@ -23,6 +23,7 @@ describe('Dropdown Spec', function(){
 	it('should open dropdown on enter key press', enterKeyOpen);
 	it('should close dropdown on esc key press', escKeyClose);
 	it('should select an option when clicked', clickSelectOption);
+	it('should select an option when enter key is pressed', enterSelectOption);
 
 	function hasDropdowns(){
 
@@ -124,7 +125,7 @@ describe('Dropdown Spec', function(){
 				.then(function(){
 
 					_option.element(by.css('span')).getText()
-					.then(function(previousText){
+					.then(function(optionText){
 
 						_option.click()
 						.then(function(){
@@ -134,7 +135,7 @@ describe('Dropdown Spec', function(){
 							_current.getText()
 							.then(function(currentText){
 
-								expect(currentText).toMatch(previousText);
+								expect(currentText).toMatch(optionText);
 								
 							});
 							
@@ -143,6 +144,50 @@ describe('Dropdown Spec', function(){
 					});
 					
 				});				
+				
+			});
+			
+		});
+		
+	}
+
+	function enterSelectOption(){
+
+		_openClickDropdown(0, function(dropdown){
+
+			dropdown.all(by.repeater(elements.optionsRepeater))
+			.then(function(options){
+
+				var _option = options[0];
+
+				_checkVisible(_option)
+				.then(function(){
+
+					_option.element(by.css('span')).getText()
+					.then(function(optionText){
+
+						browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform()
+						.then(function(){
+
+							browser.actions().sendKeys(protractor.Key.ENTER).perform()
+							.then(function(){
+
+								var _current = dropdown.element(by.css('.current-selected-option span'));
+
+								_current.getText()
+								.then(function(currentText){
+
+									expect(currentText).toMatch(optionText);
+									
+								});								
+								
+							});
+							
+						});
+
+					});
+					
+				});
 				
 			});
 			
