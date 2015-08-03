@@ -125,6 +125,19 @@ Dynamic Height support:
 <div data-pg-ng-dropdown data-dynamic-height="true" data-options="myOptionsArray"></div>
 ```
 
+To simulate ng-disabled functionality, you must pass a function that return the disabled condition result:
+```javascript
+$scope.disabled = function(){
+
+	return $scope.valA !== $scope.valB;
+	
+};
+```
+
+```html
+<div data-pg-ng-dropdown disabled="disabled()" data-options="myOptionsArray"></div>
+```
+
 
 #### Registered Scope Events
 

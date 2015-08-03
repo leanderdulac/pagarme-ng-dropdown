@@ -106,5 +106,8 @@ article {
     background-repeat: no-repeat; }
   .pg-dropdown.opened {
     height: 215px; }
+  .pg-dropdown.disabled {
+    opacity: 0.2;
+    cursor: not-allowed; }
   .pg-dropdown:focus {
     background-color: #5f5f5f; }
