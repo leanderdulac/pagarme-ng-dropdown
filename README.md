@@ -1,9 +1,9 @@
-# [pg-ng-dropdown](http://pagarme.github.io/pg-ng-dropdown/)
+# [pagarme-ng-dropdown](http://pagarme.github.io/pagarme-ng-dropdown)
 *[Pagar.me](http://pagar.me) directive to provide a simple and quick dropdown from a provided array of options*
 
-*For angular versions < 1.3 that does not supports* [`bindToController`](https://docs.angularjs.org/api/ng/service/$compile) *, you should see this [branch](https://github.com/pagarme/pg-ng-dropdown/tree/legacy).*
+*For angular versions < 1.3 that does not supports* [`bindToController`](https://docs.angularjs.org/api/ng/service/$compile) *, you should see this [branch](https://github.com/pagarme/pagarme-ng-dropdown/tree/legacy).*
 
-### Check the demo [here](http://pagarme.github.io/pg-ng-dropdown/)
+### Check the demo [here](http://pagarme.github.io/pagarme-ng-dropdown/)
 
 #### Installation
 
@@ -46,6 +46,11 @@ Pass the data via attribute:
 <div data-pg-ng-dropdown data-options="myOptionsArray"></div>
 ```
 
+Give a model to the dropdown:
+```html
+<div data-pg-ng-dropdown data-model="myModel" data-options="myOptionsArray"></div>
+```
+
 #### Array expected format
 
 The options array must contains one JSON for each option.
@@ -56,14 +61,17 @@ var myOptionArray = [
 		{
 			text: 'Carl Sagan',
 			image: 'img/carl.png' //if image-options is set to true
+			value: 0,
 		},
 		{
 			text: 'Stephen Hawking',
 			image: 'img/stephen.png' //if image-options is set to true
+			value: 1,
 		},
 		{
 			text: 'Michio Kaku',
 			image: 'img/michio.png' //if image-options is set to true
+			value: 2,
 		}
 ];
 ```
@@ -71,7 +79,14 @@ var myOptionArray = [
 
 #### Directive Optionals
 
-You can choose the object property to display the text of the option, instead of the default `text`:
+You can choose what property from the json you wish to be used as value for the model, instead of the default `value`.
+On the given example below, the text of the option will be set to the model, instead of its value.
+
+```html
+<div data-pg-ng-dropdown data-value-property="text" data-model="myModel" data-options="myOptionsArray"></div>
+```
+
+Also choose the object property to display the text of the option, instead of the default `text`:
 
 ```html
 <div data-pg-ng-dropdown data-text-property="diffTextProp" data-options="myOptionsArray"></div>
@@ -85,15 +100,9 @@ You can do the same to set the image url of the option, instead of the default `
 ```
 
 
-Set the initial display text of the dropdown:
+Set the empty text that will be displayed when model is empty or does not matches any of the options:
 ```html
-<div data-pg-ng-dropdown data-selected="Choose an option" data-options="myOptionsArray"></div>
-```
-
-
-Or choose initial selected option (default is `0`):
-```html
-<div data-pg-ng-dropdown data-selected="3" data-options="myOptionsArray"></div>
+<div data-pg-ng-dropdown data-empty-text="Choose an option" data-options="myOptionsArray"></div>
 ```
 
 
@@ -120,6 +129,24 @@ Option selected/changed custom function:
 <div data-pg-ng-dropdown data-onchange="myFunction" data-options="myOptionsArray"></div>
 ```
 
+Dynamic Height support:
+```html
+<div data-pg-ng-dropdown data-dynamic-height="true" data-options="myOptionsArray"></div>
+```
+
+To simulate ng-disabled functionality, you must pass a function that return the disabled condition result:
+
+```javascript
+$scope.disabled = function(){
+
+	return $scope.valA !== $scope.valB;
+	
+};
+```
+
+```html
+<div data-pg-ng-dropdown disabled="disabled()" data-options="myOptionsArray"></div>
+```
 
 
 #### Registered Scope Events
@@ -153,21 +180,13 @@ $scope.$broadcast('pg-select-option', {
 });
 ```
 
+#### Accessibility
 
+Supports tab index, with `enter`, `esc`, `up` and `down` arrows controls. Enter key opens the focused dropdown and esc closes it. Use up and down arrow to choose an option and press enter again to select it.
 
-#### Retrieving the selected option
-
-The option that is selected will recieve the `selected: true` property.
-
-Example:
-```javascript
-{
-	text: 'Carl Sagan',
-	image: 'img/carl.png',
-	selected: true
-}
-```
-
+#### Testing
+This directive has e2e testing specs done by [protractor](https://angular.github.io/protractor/#/).
+Follow protractor's instructions, run `gulp server` task and run testing command `protractor protractor.conf.js` to run the test cases.
 
 And that's it :D
 
