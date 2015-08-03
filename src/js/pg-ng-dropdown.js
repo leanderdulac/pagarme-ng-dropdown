@@ -16,9 +16,9 @@
 
 			'<div class="pg-dropdown" data-ng-class="{\'disabled\': ctrl.disabled()}">',
 				'<div data-ng-click="ctrl.toggle()" class="current-selected-option">',
-						'<i data-ng-if="ctrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
+						'<i data-ng-if="ctrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.selectedOption][ctrl.imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="ctrl.data[ctrl.value][ctrl.textProperty] || ctrl.value">',
+						'<span data-ng-bind="ctrl.data[ctrl.selectedOption][ctrl.textProperty] || ctrl.emptyText">',
 						'</span>',
 						'<div class="arrow-wrapper">',
 							'<div class="arrow"></div>',
@@ -43,16 +43,18 @@
 			scope: {
 				
 				data: '=options',
+				model: '=',
 				image: '@imageOptions',
-				value: '@selected',
+				emptyText: '@',
 				name: '@',
 				imageProperty: '@',
 				textProperty: '@',
+				valueProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
-				onchange: '&',
 				dynamicHeight: '@',
 				disabled: '&',
+				onchange: '&',
 
 			},
 
@@ -70,9 +72,9 @@
 
 		function compile($element, attrs){
 
-			attrs.value = attrs.value || 0;
 			attrs.textProperty = attrs.textProperty || 'text';
 			attrs.imageProperty = attrs.imageProperty || 'image';
+			attrs.valueProperty = attrs.valueProperty || 'value';
 
 			return {
 				post: postLink,
@@ -86,6 +88,7 @@
 
 			vm.opened = false;
 			vm.currentOption = -1;
+			vm.selectedOption;
 
 			vm.selectOption = selectOption;
 			vm.open = open;
@@ -108,28 +111,31 @@
 
 			});
 
-			if((typeof vm.value) === 'number'){
+			if(vm.model){
 
-				vm.data[vm.value].selected = true;
+				vm.data.forEach(function(opt, i){
+
+					if(opt[vm.valueProperty] == vm.model){
+
+						vm.selectedOption = i;
+
+					}
+					
+				});
 
 			}
-
+			
 			function selectOption(_index){
 
-				if(_index !== parseInt(vm.value)){
-					
-					var _pastSelected = vm.value;
+				if(_index !== parseInt(vm.selectedOption)){
+
+					var _pastSelected = vm.selectedOption;
 
 					_index = parseInt(_index);
 
-					vm.value = _index;
-					vm.data[_index].selected = true;
+					vm.selectedOption = _index;
 
-					if(vm.data[_pastSelected]){
-
-						vm.data[_pastSelected].selected = null;
-
-					}
+					vm.model = vm.data[vm.selectedOption][vm.valueProperty];
 
 					vm.onchange();
 
@@ -184,7 +190,6 @@
 			var openedHeight;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
-			var disabledClass = 'disabled';
 
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
@@ -192,10 +197,6 @@
 
 			if(ctrl.selectedClass){
 				var selectedClass = ctrl.selectedClass;
-			}
-
-			if(ctrl.disabledClass){
-				var disabledClass = ctrl.disabledClass;
 			}
 			
 			var $open = $scope.$on('pg-open-dropdown', open);
@@ -221,7 +222,7 @@
 
 				optionsWrapper = $element.find('ul');
 				options = optionsWrapper.find('li');
-				options.eq(ctrl.value).addClass(selectedClass);
+				options.eq(ctrl.selectedOption).addClass(selectedClass);
 
 				optionHeight = options.eq(0).prop('offsetHeight');
 
@@ -321,7 +322,7 @@
 
 						ctrl.open();
 
-					}else if(ctrl.opened && ctrl.currentOption != -1 && ctrl.currentOption != ctrl.value){
+					}else if(ctrl.opened && ctrl.currentOption != -1 && ctrl.currentOption != ctrl.selectedOption){
 
 						$scope.$apply(function(){
 

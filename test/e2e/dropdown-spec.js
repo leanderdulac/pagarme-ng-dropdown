@@ -117,30 +117,6 @@ describe('Dropdown Spec', function(){
 		
 	}
 
-	function tabFocus(){
-
-		elements.dropdowns
-		.then(function(dropdowns){
-
-			var _dropdown = dropdowns[0];
-
-			browser.actions().sendKeys(protractor.Key.TAB).perform()
-			.then(function(){
-
-				browser.driver.switchTo().activeElement()
-				.getAttribute('class')
-				.then(function(focusedClasses){
-
-					expect(_dropdown.getAttribute('class')).toMatch(focusedClasses);
-					
-				});
-				
-			});
-			
-		});
-		
-	}
-
 	function clickSelectOption(){
 
 		_openClickDropdown(0, function(dropdown){
