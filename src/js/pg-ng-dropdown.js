@@ -8,9 +8,9 @@
 	angular.module('pg-ng-dropdown', [])
 		.directive('pgNgDropdown', dropdownDirective);
 
-	dropdownDirective.$inject = ['$timeout', '$document'];
+	dropdownDirective.$inject = ['$timeout', '$document', '$rootScope'];
 
-	function dropdownDirective($timeout, $document){
+	function dropdownDirective($timeout, $document, $rootScope){
 
 		var template = [
 
@@ -41,16 +41,18 @@
 		var directive = {
 
 			scope: {
+				
 				data: '=options',
 				image: '@imageOptions',
-				imageProperty: '@',
 				value: '@selected',
 				name: '@',
+				imageProperty: '@',
 				textProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
 				onchange: '&',
 				dynamicHeight: '@',
+
 			},
 			restrict: 'AEC',
 			compile: compile,
@@ -68,7 +70,8 @@
 
 			attrs.value = attrs.value || 0;
 			attrs.textProperty = attrs.textProperty || 'text';
-			attrs.imageProperty = attrs.imagetProperty || 'image';
+			attrs.imageProperty = attrs.imageProperty || 'image';
+			attrs.valueProperty = attrs.valueProperty || 'value';
 
 			return {
 				post: postLink,
@@ -90,7 +93,7 @@
 
 			$scope.$watch('data', function(){
 
-				$scope.$broadcast('options-changed');
+				$rootScope.$broadcast('options-changed');
 
 			});
 
@@ -119,7 +122,7 @@
 
 					vm.onchange();
 
-					$scope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
+					$rootScope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
 
 				}
 				
@@ -130,12 +133,12 @@
 				if(vm.opened){
 
 					vm.opened = false;
-					$scope.$broadcast('pg-close-dropdown');
+					$rootScope.$broadcast('pg-close-dropdown');
 
 				}else{
 
 					vm.opened = true;
-					$scope.$broadcast('pg-open-dropdown');
+					$rootScope.$broadcast('pg-open-dropdown');
 
 				}
 
@@ -144,14 +147,14 @@
 			function open(){
 				
 				vm.opened = true;
-				$scope.$broadcast('pg-open-dropdown');
+				$rootScope.$broadcast('pg-open-dropdown');
 
 			}
 
 			function close(){
 
 				vm.opened = false;
-				$scope.$broadcast('pg-close-dropdown');
+				$rootScope.$broadcast('pg-close-dropdown');
 
 			}
 			
