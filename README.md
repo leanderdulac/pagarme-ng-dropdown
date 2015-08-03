@@ -184,6 +184,10 @@ $scope.$broadcast('pg-select-option', {
 
 Supports tab index, with `enter`, `esc`, `up` and `down` arrows controls. Enter key opens the focused dropdown and esc closes it. Use up and down arrow to choose an option and press enter again to select it.
 
+#### Testing
+This directive has e2e testing specs done by [protractor](https://angular.github.io/protractor/#/).
+Follow protractor's instructions, run `gulp server` task and run testing command `protractor protractor.conf.js` to run the test cases.
+
 And that's it :D
 
 [Rafael Violato](http://rviolato.com) @ [pagar.me](http://pagar.me)
