@@ -8,13 +8,13 @@
 	angular.module('pg-ng-dropdown', [])
 		.directive('pgNgDropdown', dropdownDirective);
 
-	dropdownDirective.$inject = ['$timeout', '$document'];
+	dropdownDirective.$inject = ['$timeout', '$document', '$parse'];
 
-	function dropdownDirective($timeout, $document){
+	function dropdownDirective($timeout, $document, $parse){
 
 		var template = [
 
-			'<div class="pg-dropdown">',
+			'<div class="pg-dropdown" data-ng-class="{\'disabled\': ctrl.disabled()}">',
 				'<div data-ng-click="ctrl.toggle()" class="current-selected-option">',
 						'<i data-ng-if="ctrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
 						'</i>',
@@ -41,17 +41,21 @@
 		var directive = {
 
 			scope: {
+				
 				data: '=options',
 				image: '@imageOptions',
-				imageProperty: '@',
 				value: '@selected',
 				name: '@',
+				imageProperty: '@',
 				textProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
 				onchange: '&',
 				dynamicHeight: '@',
+				disabled: '&',
+
 			},
+
 			restrict: 'AEC',
 			compile: compile,
 			controller: controller,
@@ -68,7 +72,7 @@
 
 			attrs.value = attrs.value || 0;
 			attrs.textProperty = attrs.textProperty || 'text';
-			attrs.imageProperty = attrs.imagetProperty || 'image';
+			attrs.imageProperty = attrs.imageProperty || 'image';
 
 			return {
 				post: postLink,
@@ -87,6 +91,16 @@
 			vm.open = open;
 			vm.close = close;
 			vm.toggle = toggle;
+
+			if(vm.disabled() === 'undefined'){
+
+				$scope.disabled = function(){
+
+					return false;
+					
+				};
+
+			}
 
 			$scope.$watch('data', function(){
 
@@ -132,7 +146,7 @@
 					vm.opened = false;
 					$scope.$broadcast('pg-close-dropdown');
 
-				}else{
+				}else if(!vm.disabled()){
 
 					vm.opened = true;
 					$scope.$broadcast('pg-open-dropdown');
@@ -143,8 +157,12 @@
 
 			function open(){
 				
-				vm.opened = true;
-				$scope.$broadcast('pg-open-dropdown');
+				if(!vm.disabled()){
+
+					vm.opened = true;
+					$scope.$broadcast('pg-open-dropdown');
+
+				}
 
 			}
 
@@ -166,6 +184,7 @@
 			var openedHeight;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
+			var disabledClass = 'disabled';
 
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
@@ -173,6 +192,10 @@
 
 			if(ctrl.selectedClass){
 				var selectedClass = ctrl.selectedClass;
+			}
+
+			if(ctrl.disabledClass){
+				var disabledClass = ctrl.disabledClass;
 			}
 			
 			var $open = $scope.$on('pg-open-dropdown', open);

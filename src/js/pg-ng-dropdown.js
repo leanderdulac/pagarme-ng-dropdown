@@ -8,13 +8,13 @@
 	angular.module('pg-ng-dropdown', [])
 		.directive('pgNgDropdown', dropdownDirective);
 
-	dropdownDirective.$inject = ['$timeout', '$document', '$rootScope'];
+	dropdownDirective.$inject = ['$timeout', '$document', '$parse'];
 
-	function dropdownDirective($timeout, $document, $rootScope){
+	function dropdownDirective($timeout, $document, $parse){
 
 		var template = [
 
-			'<div class="pg-dropdown">',
+			'<div class="pg-dropdown" data-ng-class="{\'disabled\': ctrl.disabled()}">',
 				'<div data-ng-click="ctrl.toggle()" class="current-selected-option">',
 						'<i data-ng-if="ctrl.image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(ctrl.data[ctrl.value][ctrl.imageProperty])+\')\'}">',
 						'</i>',
@@ -52,8 +52,10 @@
 				selectedClass: '@',
 				onchange: '&',
 				dynamicHeight: '@',
+				disabled: '&',
 
 			},
+
 			restrict: 'AEC',
 			compile: compile,
 			controller: controller,
@@ -71,7 +73,6 @@
 			attrs.value = attrs.value || 0;
 			attrs.textProperty = attrs.textProperty || 'text';
 			attrs.imageProperty = attrs.imageProperty || 'image';
-			attrs.valueProperty = attrs.valueProperty || 'value';
 
 			return {
 				post: postLink,
@@ -91,9 +92,19 @@
 			vm.close = close;
 			vm.toggle = toggle;
 
+			if(vm.disabled() === 'undefined'){
+
+				$scope.disabled = function(){
+
+					return false;
+					
+				};
+
+			}
+
 			$scope.$watch('data', function(){
 
-				$rootScope.$broadcast('options-changed');
+				$scope.$broadcast('options-changed');
 
 			});
 
@@ -122,7 +133,7 @@
 
 					vm.onchange();
 
-					$rootScope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
+					$scope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
 
 				}
 				
@@ -133,12 +144,12 @@
 				if(vm.opened){
 
 					vm.opened = false;
-					$rootScope.$broadcast('pg-close-dropdown');
+					$scope.$broadcast('pg-close-dropdown');
 
-				}else{
+				}else if(!vm.disabled()){
 
 					vm.opened = true;
-					$rootScope.$broadcast('pg-open-dropdown');
+					$scope.$broadcast('pg-open-dropdown');
 
 				}
 
@@ -146,15 +157,19 @@
 
 			function open(){
 				
-				vm.opened = true;
-				$rootScope.$broadcast('pg-open-dropdown');
+				if(!vm.disabled()){
+
+					vm.opened = true;
+					$scope.$broadcast('pg-open-dropdown');
+
+				}
 
 			}
 
 			function close(){
 
 				vm.opened = false;
-				$rootScope.$broadcast('pg-close-dropdown');
+				$scope.$broadcast('pg-close-dropdown');
 
 			}
 			
@@ -169,6 +184,7 @@
 			var openedHeight;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
+			var disabledClass = 'disabled';
 
 			if(ctrl.openedClass){
 				var openedClass = ctrl.openedClass;
@@ -176,6 +192,10 @@
 
 			if(ctrl.selectedClass){
 				var selectedClass = ctrl.selectedClass;
+			}
+
+			if(ctrl.disabledClass){
+				var disabledClass = ctrl.disabledClass;
 			}
 			
 			var $open = $scope.$on('pg-open-dropdown', open);
