@@ -8,21 +8,22 @@
 	angular.module('pg-ng-dropdown', [])
 		.directive('pgNgDropdown', dropdownDirective);
 
-	dropdownDirective.$inject = ['$timeout', '$document'];
+	dropdownDirective.$inject = ['$timeout', '$document', '$parse'];
 
-	function dropdownDirective($timeout, $document){
+	function dropdownDirective($timeout, $document, $parse){
 
 		var template = [
 
-			'<div class="pg-dropdown">',
+			'<div class="pg-dropdown" data-ng-class="{\'disabled\': disabled()}">',
 				'<div data-ng-click="toggle()" class="current-selected-option">',
-						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(data[value][imageProperty])+\')\'}">',
+						'<i data-ng-if="image == \'true\'" data-ng-style="{\'background-image\': \'url(\'+(data[selectedOption][imageProperty])+\')\'}">',
 						'</i>',
-						'<span data-ng-bind="data[value][textProperty] || value">',
+						'<span data-ng-bind="data[selectedOption][textProperty] || emptyText">',
 						'</span>',
 						'<div class="arrow-wrapper">',
 							'<div class="arrow ss-icon ss-standard ss-navigatedown"></div>',
 						'</div>',
+						'<div style="clear:both;"></div>',
 				'</div>',
 				'<ul class="dropdown-content">',
 					'<li data-ng-click="selectOption($index)" data-ng-repeat="option in data" title="{{option[textProperty]}}" >',
@@ -30,6 +31,7 @@
 						'</i>',
 						'<span data-ng-bind="option[textProperty]">',
 						'</span>',
+						'<div style="clear:both;"></div>',
 					'</li>',
 				'</ul>',
 		    '</div>',
@@ -39,16 +41,23 @@
 		var directive = {
 
 			scope: {
+				
 				data: '=options',
+				model: '=',
 				image: '@imageOptions',
-				imageProperty: '@',
-				value: '@selected',
+				emptyText: '@',
 				name: '@',
+				imageProperty: '@',
 				textProperty: '@',
+				valueProperty: '@',
 				openedClass: '@',
 				selectedClass: '@',
+				dynamicHeight: '@',
+				disabled: '&',
 				onchange: '&',
+
 			},
+
 			restrict: 'AEC',
 			compile: compile,
 			controller: controller,
@@ -61,11 +70,11 @@
 
 		function compile($element, attrs){
 
-			attrs.value = attrs.value || 0;
 			attrs.textProperty = attrs.textProperty || 'text';
-			attrs.imageProperty = attrs.imagetProperty || 'image';
+			attrs.imageProperty = attrs.imageProperty || 'image';
+			attrs.valueProperty = attrs.valueProperty || 'value';
 
-			return{
+			return {
 				post: postLink,
 			};
 			
@@ -74,34 +83,55 @@
 		function controller($scope){
 
 			$scope.opened = false;
+			$scope.currentOption = -1;
+			$scope.selectedOption;
 
 			$scope.selectOption = selectOption;
 			$scope.open = open;
 			$scope.close = close;
 			$scope.toggle = toggle;
 
-			if((typeof $scope.value) === 'number'){
+			if($scope.disabled() === 'undefined'){
 
-				$scope.data[$scope.value].selected = true;
+				$scope.disabled = function(){
+
+					return false;
+					
+				};
 
 			}
 
+			$scope.$watch('data', function(){
+
+				$scope.$broadcast('options-changed');
+
+			});
+
+			if($scope.model){
+
+				$scope.data.forEach(function(opt, i){
+
+					if(opt[$scope.valueProperty] == $scope.model){
+
+						$scope.selectedOption = i;
+
+					}
+					
+				});
+
+			}
+			
 			function selectOption(_index){
 
-				if(_index !== parseInt($scope.value)){
-					
-					var _pastSelected = $scope.value;
+				if(_index !== parseInt($scope.selectedOption)){
+
+					var _pastSelected = $scope.selectedOption;
 
 					_index = parseInt(_index);
 
-					$scope.value = _index;
-					$scope.data[_index].selected = true;
+					$scope.selectedOption = _index;
 
-					if($scope.data[_pastSelected]){
-
-						delete $scope.data[_pastSelected].selected;
-
-					}
+					$scope.model = $scope.data[$scope.selectedOption][$scope.valueProperty];
 
 					$scope.onchange();
 
@@ -118,7 +148,7 @@
 					$scope.opened = false;
 					$scope.$broadcast('pg-close-dropdown');
 
-				}else{
+				}else if(!$scope.disabled()){
 
 					$scope.opened = true;
 					$scope.$broadcast('pg-open-dropdown');
@@ -129,8 +159,12 @@
 
 			function open(){
 				
-				$scope.opened = true;
-				$scope.$broadcast('pg-open-dropdown');
+				if(!$scope.disabled()){
+
+					$scope.opened = true;
+					$scope.$broadcast('pg-open-dropdown');
+
+				}
 
 			}
 
@@ -145,7 +179,11 @@
 
 		function postLink($scope, $element, attrs){
 
+			var optionsWrapper;
 			var options;
+			var optionHeight;
+			var closedHeight;
+			var openedHeight;
 			var openedClass = 'opened';
 			var selectedClass = 'selected';
 
@@ -162,6 +200,7 @@
 			var $openThis = $scope.$on('pg-dropdown-open', openEvt);
 			var $closeThis = $scope.$on('pg-dropdown-close', closeEvt);
 			var $selectThis = $scope.$on('pg-select-option', selectEvt);
+			var $optionsChanged = $scope.$on('pg-options-changed', measureHeight);
 			var $select = $scope.$on('pg-option-selected', function($evt, data){
 
 				select($evt, data);
@@ -169,15 +208,25 @@
 
 			});
 
-			$scope.$on('$destroy', destroy);
 			$element.on('click', elementClick);
 			$document.on('click', $scope.close);
+			$element.on('keydown', keydown);
+			$scope.$on('$destroy', destroy);
 
 			//init
 			$timeout(function(){
 
-				options = $element.find('li');
-				options.eq($scope.value).addClass(selectedClass);
+				optionsWrapper = $element.find('ul');
+				options = optionsWrapper.find('li');
+				options.eq($scope.selectedOption).addClass(selectedClass);
+
+				optionHeight = options.eq(0).prop('offsetHeight');
+
+				if($scope.dynamicHeight){
+
+					measureHeight();
+
+				}
 
 			});
 
@@ -192,11 +241,28 @@
 
 				$element.addClass(openedClass);
 
+				if($scope.dynamicHeight){
+					$element.css('height', (openedHeight) + 'px');
+				}
+
 			}
 
 			function close(){
 
 				$element.removeClass(openedClass);
+
+				if($scope.currentOption > 0){
+
+					options.eq($scope.currentOption).removeClass('focused');
+					$scope.currentOption = -1;
+
+				}
+
+				if($scope.dynamicHeight){
+
+					$element.css('height', (closedHeight) + 'px');
+
+				}
 
 			}
 
@@ -240,13 +306,96 @@
 				
 			}
 
+			function keydown(evt){
+
+				var _code = evt.keyCode || evt.which;
+
+				if(_code === 13) { //enter
+
+					evt.preventDefault();
+
+					if(!$scope.opened){
+
+						$scope.open();
+
+					}else if($scope.opened && $scope.currentOption != -1 && $scope.currentOption != $scope.selectedOption){
+
+						$scope.$apply(function(){
+
+							$scope.selectOption($scope.currentOption);
+
+						});
+
+					}
+
+				}else if(_code === 27){ //esc
+
+					evt.preventDefault();
+
+					if($scope.opened){
+
+						$scope.close();
+
+					}
+
+				}else if(_code === 38){ //up
+
+					evt.preventDefault();
+
+					if($scope.currentOption-1 >= 0){
+
+						options.eq($scope.currentOption).removeClass('focused');
+						$scope.currentOption--;
+						options.eq($scope.currentOption).addClass('focused');
+
+						if($scope.currentOption < options.length){
+
+							optionsWrapper[0].scrollTop -= optionHeight;
+
+						}
+
+					}
+
+				}else if(_code === 40){ //down
+
+					evt.preventDefault();
+
+					if($scope.currentOption+1 < options.length){
+
+						options.eq($scope.currentOption).removeClass('focused');
+						$scope.currentOption++;
+						options.eq($scope.currentOption).addClass('focused');
+						
+						if($scope.currentOption > 1){
+
+							optionsWrapper[0].scrollTop += optionHeight;
+
+						}
+
+					}
+
+				}
+				
+			}
+
+			function measureHeight(){
+
+				var _style = window.getComputedStyle(optionsWrapper[0]);
+				var _padding = parseInt(_style.paddingTop) + parseInt(_style.paddingBottom);
+				var _margin = parseInt(_style.marginTop) + parseInt(_style.marginBottom);
+
+				closedHeight = $element.prop('offsetHeight');
+				openedHeight = (optionHeight * options.length) + closedHeight + _padding + _margin;
+				
+			}
+
 			function destroy(){
 				
-				$document.off('click');
 				$document.off('click');
 				$open();
 				$close();
 				$select();
+				$optionsChanged();
 				$closeThis();
 				$openThis();
 				$selectThis();

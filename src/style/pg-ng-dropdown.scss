@@ -25,6 +25,22 @@ $backgroundColor: dimgrey;
 $arrowColor: floralwhite;
 $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
+[dynamic-height=true]{
+
+	.dropdown-content{
+
+		overflow: hidden !important;
+
+	}
+
+}
+
+[image-options=true]{
+
+	width: 260px !important;
+
+}
+
 .pg-dropdown{
 
 	position: relative;
@@ -34,7 +50,8 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	border-radius: 4px;
 	cursor:pointer;
 	overflow: hidden;
-	transition: height 425ms $dropdownEasing;
+	transition: height 425ms $dropdownEasing, background-color 300ms ease;
+	box-sizing: border-box;
 	float:left;
 
 	.arrow-wrapper{
@@ -107,7 +124,7 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 
 		span{ overflow:hidden; }
 
-		&:hover{
+		&:hover, &.focused{
 
 			background-color: #333;
 
@@ -152,6 +169,19 @@ $dropdownEasing: cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	&.opened{
 
 		height: $openedHeight;
+
+	}
+
+	&.disabled{
+
+		opacity: 0.2;
+		cursor: not-allowed;
+
+	}
+
+	&:focus{
+
+		background-color: darken($backgroundColor, 4);
 
 	}
 
