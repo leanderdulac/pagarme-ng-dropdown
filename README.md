@@ -12,14 +12,9 @@ Install via npm package manager:
 $ npm install pg-ng-dropdown
 ```
 
-Or via Bower:
-```
-$ bower install pg-ng-dropdown
-```
-
 Import the directive file into your project:
 ```html
-<script src="bower_components/pg-ng-dropdown/dest/pg-ng-dropdown.min.js"></script>
+<script src="node_modules/pg-ng-dropdown/dest/pg-ng-dropdown.min.js"></script>
 ```
 
 If you wish the same style of the example, import the css.
