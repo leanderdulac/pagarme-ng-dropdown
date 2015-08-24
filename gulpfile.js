@@ -8,6 +8,8 @@ var minifycss = require('gulp-minify-css');
 var merge = require('merge-stream');
 var del = require('del');
 
+var projectFile = 'pg-ng-dropdown';
+
 
 var port = 4000;
 
@@ -46,7 +48,7 @@ gulp.task('clean:dest', function(cb){
 
 gulp.task('build', ['style', 'clean:dest'], function(){
 
-  var js = gulp.src('src/js/pg-ng-dropdown.js')
+  var js = gulp.src('src/js/' + projectFile + '.js')
            .pipe(gulp.dest('dest/js'))
            .pipe(uglify({mangle: false}))
            .pipe(rename(function(path){
@@ -54,10 +56,22 @@ gulp.task('build', ['style', 'clean:dest'], function(){
            }))
            .pipe(gulp.dest('dest/js'));
 
-  var css = gulp.src('src/style/*.css')
+  var cssFiles = [
+                  'src/style/' + projectFile + '.min.css',
+                  'src/style/' + projectFile + '.css'
+                 ];
+
+  var css = gulp.src(cssFiles)
             .pipe(gulp.dest('dest/css'));
 
-  return merge(js, css);
+  var sassFiles = [
+                   'src/style/' + projectFile + '.scss'
+                  ];
+
+  var sass = gulp.src(sassFiles)
+            .pipe(gulp.dest('dest/sass'));
+
+  return merge(js, css, sass);
 
 });
 
