@@ -1,8 +1,4 @@
 'use strict';
-/**
- * @author Rafael Violato (http://rviolato.com)
- */
-
 (function(){
 
 	angular.module('pg-ng-dropdown', [])
@@ -41,7 +37,7 @@
 		var directive = {
 
 			scope: {
-				
+
 				data: '=options',
 				model: '=',
 				image: '@imageOptions',
@@ -79,7 +75,7 @@
 			return {
 				post: postLink,
 			};
-			
+
 		}
 
 		function controller($scope){
@@ -100,7 +96,7 @@
 				$scope.disabled = function(){
 
 					return false;
-					
+
 				};
 
 			}
@@ -111,20 +107,16 @@
 
 			});
 
-			if(vm.model){
+            $scope.$watch('model', function() {
+                if(vm.model){
+                    vm.data.forEach(function(opt, i){
+                        if(opt[vm.valueProperty] == vm.model){
+                            vm.selectedOption = i;
+                        }
+                    });
+                }
+            });
 
-				vm.data.forEach(function(opt, i){
-
-					if(opt[vm.valueProperty] == vm.model){
-
-						vm.selectedOption = i;
-
-					}
-					
-				});
-
-			}
-			
 			function selectOption(_index){
 
 				if(_index !== parseInt(vm.selectedOption)){
@@ -142,7 +134,7 @@
 					$scope.$broadcast('pg-option-selected', {index: _index, pastIndex: _pastSelected});
 
 				}
-				
+
 			}
 
 			function toggle(){
@@ -162,7 +154,7 @@
 			}
 
 			function open(){
-				
+
 				if(!vm.disabled()){
 
 					vm.opened = true;
@@ -178,7 +170,7 @@
 				$scope.$broadcast('pg-close-dropdown');
 
 			}
-			
+
 		}
 
 		function postLink($scope, $element, attrs, ctrl){
@@ -198,7 +190,7 @@
 			if(ctrl.selectedClass){
 				var selectedClass = ctrl.selectedClass;
 			}
-			
+
 			var $open = $scope.$on('pg-open-dropdown', open);
 			var $close = $scope.$on('pg-close-dropdown', close);
 			var $openThis = $scope.$on('pg-dropdown-open', openEvt);
@@ -238,7 +230,7 @@
 
 				options.eq(data.index).addClass(selectedClass);
 				options.eq(data.pastIndex).removeClass(selectedClass);
-				
+
 			}
 
 			function open(){
@@ -287,7 +279,7 @@
 					});
 
 				}
-				
+
 			}
 
 			function openEvt($evt, data){
@@ -297,7 +289,7 @@
 					ctrl.open();
 
 				}
-				
+
 			}
 
 			function closeEvt($evt, data){
@@ -307,7 +299,7 @@
 					ctrl.close();
 
 				}
-				
+
 			}
 
 			function keydown(evt){
@@ -369,7 +361,7 @@
 						options.eq(ctrl.currentOption).removeClass('focused');
 						ctrl.currentOption++;
 						options.eq(ctrl.currentOption).addClass('focused');
-						
+
 						if(ctrl.currentOption > 1){
 
 							optionsWrapper[0].scrollTop += optionHeight;
@@ -379,7 +371,7 @@
 					}
 
 				}
-				
+
 			}
 
 			function measureHeight(){
@@ -390,11 +382,11 @@
 
 				closedHeight = $element.prop('offsetHeight');
 				openedHeight = (optionHeight * options.length) + closedHeight + _padding + _margin;
-				
+
 			}
 
 			function destroy(){
-				
+
 				$document.off('click');
 				$open();
 				$close();
@@ -409,5 +401,5 @@
 		}
 
 	}
-	
+
 })();
