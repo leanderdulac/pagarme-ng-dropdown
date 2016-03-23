@@ -1,6 +1,6 @@
 {
   "name": "pg-ng-dropdown",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Pagar.me directive to provide a simple and quick dropdown from a provided array of options",
   "main": "gulpfile.js",
   "scripts": {
